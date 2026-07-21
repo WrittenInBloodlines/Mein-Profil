@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>S.S. Archive</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500&family=Caveat:wght@600&family=Patrick+Hand&display=swap');
 
     * { box-sizing: border-box; }
 
@@ -77,7 +77,7 @@
       padding: 0 5px;
     }
 
-    /* BÜCHER - EXAKT GLEICH GROSS & SYMMETRISCH */
+    /* BÜCHER */
     .book-spine {
       flex: 0 0 22%;
       height: 320px;
@@ -197,7 +197,16 @@
       padding-bottom: 10px; margin-bottom: 15px; font-weight: 900;
     }
 
-    .book-body { flex: 1; overflow-y: auto; color: #1a0a03; font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.6; }
+    /* TAGEBUCH-SCHRIFT FÜR DEN INHALT */
+    .book-body { 
+      flex: 1; 
+      overflow-y: auto; 
+      color: #1a0a03; 
+      font-family: 'Patrick Hand', 'Caveat', cursive; 
+      font-size: 20px; 
+      line-height: 1.5; 
+      letter-spacing: 0.5px;
+    }
 
     .book-controls {
       display: flex; justify-content: space-between; align-items: center;
@@ -217,6 +226,27 @@
       font-size: 12px; font-weight: bold; color: #8b0000;
       background: rgba(60, 10, 10, 0.15); border: 1px solid #8b0000;
       border-radius: 4px; padding: 3px 10px; cursor: pointer;
+    }
+
+    /* GUTH LESBARES DUNKLES ZITAT */
+    .quote-box {
+      font-family: 'Caveat', cursive;
+      font-size: 24px;
+      font-weight: 600;
+      color: #0d0d0d;
+      border-left: 3px solid #420808;
+      padding-left: 12px;
+      margin-top: 20px;
+      line-height: 1.4;
+    }
+
+    .quote-author {
+      text-align: right;
+      color: #3b0505;
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -312,7 +342,7 @@
 
       "<b>11. Das Band der Ehe:</b><br>Heute führen sie eine Ehe voller Vertrauen. Ciro ist Alex' exklusiver Anker, bei dem er seine Maske fallen lassen kann.<br><br>Ciros Wärme gibt Alex die bedingungslose Akzeptanz, die seine Eltern ihm verwehrten, während Alex' Unsterblichkeit Ciro die Furcht vor dem Verlassenwerden nimmt.",
 
-      "<b>12. Zitat von Alex:</b><br><br><blockquote style='font-style: italic; color: #8b0000; border-left: 2px solid #d4af37; padding-left: 10px; margin-top: 20px;'>»Die Dunkelheit war mein einziger Zufluchtsort, bis deine Stimme das Schweigen brach. Ich habe gelernt zu überleben, aber erst an deiner Seite habe ich gelernt, was es bedeutet, zu leben.«</blockquote><br><div style='text-align: right; color: #d4af37;'>— Ethyalexia</div>"
+      "<b>12. Zitat von Alex:</b><br><div class='quote-box'>»Die Dunkelheit war mein einziger Zufluchtsort, bis deine Stimme das Schweigen brach. Ich habe gelernt zu überleben, aber erst an deiner Seite habe ich gelernt, was es bedeutet, zu leben.«</div><div class='quote-author'>— Ethyalexia</div>"
     ];
 
     const ciroPages = [
@@ -338,7 +368,7 @@
 
       "<b>11. Heilung durch die Ehe:</b><br>In ihrer Ehe heilen sie gegenseitig ihre Wunden. Ciro schenkt Alex Wärme und bedingungslose Akzeptanz.<br><br>Durch Alex' Stärke und Unsterblichkeit lernt Ciro wiederum, dass wahre Liebe nicht bedeutet, aus Angst zu klammern, sondern in Freiheit zu vertrauen.",
 
-      "<b>12. Zitat von Ciro:</b><br><br><blockquote style='font-style: italic; color: #124733; border-left: 2px solid #d4af37; padding-left: 10px; margin-top: 20px;'>»Ich habe mein ganzes Leben damit verbracht, stark genug zu werden, um niemanden mehr zu verlieren. Bei dir habe ich erkannt, dass Stärke nicht bedeutet, die Welt zu beherrschen – sondern demjenigen einen Zufluchtsort zu bieten, den man liebt.«</blockquote><br><div style='text-align: right; color: #d4af37;'>— Cyrus</div>"
+      "<b>12. Zitat von Ciro:</b><br><div class='quote-box'>»Ich habe mein ganzes Leben damit verbracht, stark genug zu werden, um niemanden mehr zu verlieren. Bei dir habe ich erkannt, dass Stärke nicht bedeutet, die Welt zu beherrschen – sondern demjenigen einen Zufluchtsort zu bieten, den man liebt.«</div><div class='quote-author'>— Cyrus</div>"
     ];
 
     const emptyPages = Array(12).fill("Diese Seite ist noch leer.");
