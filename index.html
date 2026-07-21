@@ -98,7 +98,7 @@
       padding: 0 5px;
     }
 
-    /* BÜCHER - VEREDELTES LEDER-DESIGN */
+    /* BÜCHER - DESIGN OHNE DIE STREIFEN OBEN/UNTEN */
     .book-spine {
       flex: 0 0 22%;
       height: 325px;
@@ -121,16 +121,15 @@
       box-shadow: -12px 15px 25px rgba(212, 175, 55, 0.45);
     }
 
-    /* ECHTE LEDER-RILLEN (RIBS) OBEN UND UNTEN */
+    /* OBERES ORNAMENT SANFT PLATZIERT */
     .book-spine::before {
-      content: "";
+      content: "✦ ⚜ ✦";
       position: absolute;
-      top: 25px; left: 0; right: 0;
-      height: 6px;
-      background: rgba(0, 0, 0, 0.5);
-      border-top: 1px solid rgba(212, 175, 55, 0.5);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.5);
-      box-shadow: 0 240px 0 rgba(0, 0, 0, 0.5);
+      top: 15px;
+      color: #d4af37;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
       z-index: 2;
     }
 
@@ -145,7 +144,7 @@
       box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
     }
 
-    /* FARB VARIANTEN MIT TIEFEREN GRAFIK-VERLÄUFEN */
+    /* FARB VARIANTEN */
     .alex { background: linear-gradient(90deg, #0d0101 0%, #691111 50%, #170202 100%); border: 1px solid #a82828; }
     .ciro { background: linear-gradient(90deg, #010a06 0%, #114e37 50%, #02170f 100%); border: 1px solid #238560; }
     .blue { background: linear-gradient(90deg, #010712 0%, #11306b 50%, #020e24 100%); border: 1px solid #2852a8; }
