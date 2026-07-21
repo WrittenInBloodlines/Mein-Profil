@@ -20,10 +20,7 @@
       overflow-x: hidden;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
+    .container { max-width: 900px; margin: 0 auto; }
 
     h1 {
       font-family: 'Cinzel', serif;
@@ -33,7 +30,6 @@
       color: #d4af37;
       letter-spacing: 5px;
       margin-top: 20px;
-      margin-bottom: 5px;
       text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
     }
 
@@ -43,427 +39,240 @@
       font-style: italic;
       color: #8b0000;
       text-align: center;
-      margin-top: 0;
       margin-bottom: 30px;
       letter-spacing: 2px;
     }
 
-    h3 {
-      font-family: 'Cinzel', serif;
-      color: #d4af37;
-      text-align: center;
-      margin-top: 30px;
-    }
+    hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent); margin: 30px 0; }
 
-    hr {
-      border: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
-      margin: 30px 0;
-    }
-
-    .badge {
-      background: rgba(20, 10, 10, 0.9);
-      color: #d4af37;
-      border: 1px solid rgba(139, 0, 0, 0.6);
-      border-radius: 6px;
-      padding: 5px 10px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin: 3px;
-      display: inline-block;
-    }
-
-    blockquote {
-      background: rgba(18, 10, 10, 0.85);
-      border-left: 3px solid #8b0000;
-      border-right: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 10px;
-      padding: 15px 18px;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 15px;
-      color: #c9bcae;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.8);
-      margin: 20px 0;
-    }
-
-    /* BÜCHERREGAL */
-    .bookshelf {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
+    /* BÜCHERREGAL SYSTEM */
+    .shelf-wrapper {
+      position: relative;
       background-color: #5c3519;
-      background-image: 
-        repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 3px, transparent 95px, rgba(0, 0, 0, 0.45) 96px, rgba(0, 0, 0, 0.45) 98px),
-        repeating-linear-gradient(90deg, #825028 0px, #5c3519 20px, #945d31 40px, #4f2c13 65px, #7d4b24 85px, #5c3519 100px);
-      padding: 35px 22px 0px 22px;
+      background-image: repeating-linear-gradient(90deg, #825028 0px, #5c3519 20px, #945d31 40px, #4f2c13 65px, #7d4b24 85px, #5c3519 100px);
+      padding: 40px 10px 0px 10px;
       border-top: 8px solid #4a2913;
-      border-left: 6px solid #331a0a;
-      border-right: 6px solid #331a0a;
       border-bottom: 24px solid #42230e;
       border-radius: 6px;
       box-shadow: inset 0 25px 35px rgba(0, 0, 0, 0.8), 0 20px 35px rgba(0, 0, 0, 0.95);
       margin-top: 25px;
-      position: relative;
-    }
-
-    /* EDLE 3D-BUCHRÜCKEN */
-    .book-spine {
-      width: 150px;
-      height: 380px;
-      border-radius: 8px 16px 16px 8px;
-      position: relative;
-      cursor: pointer;
-      box-shadow: -16px 10px 22px rgba(0, 0, 0, 0.85), inset 10px 0 15px rgba(255, 255, 255, 0.25);
-      transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
       overflow: hidden;
     }
 
-    .book-spine:hover {
-      transform: translateY(-12px) scale(1.03);
-      box-shadow: -18px 18px 30px rgba(212, 175, 55, 0.35);
+    .books-container {
+      display: flex;
+      gap: 15px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 200%; /* Platz für zwei Sets */
     }
 
-    .book-spine.alex {
-      background: 
-        linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.4) 16%, rgba(255,255,255,0.1) 18%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 81%, rgba(255,255,255,0.1) 83%, transparent 85%),
-        linear-gradient(90deg, #180303 0%, #5d1212 35%, #3d0a0a 75%, #1c0404 100%);
-      border: 1px solid #942424;
+    .shelf-set {
+      display: flex;
+      justify-content: space-around;
+      width: 50%;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
 
-    .book-spine.ciro {
-      background: 
-        linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.4) 16%, rgba(255,255,255,0.1) 18%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 81%, rgba(255,255,255,0.1) 83%, transparent 85%),
-        linear-gradient(90deg, #030f0a 0%, #124733 35%, #0b2b1e 75%, #04120c 100%);
-      border: 1px solid #207354;
-    }
-
-    /* GOLD-ORNAMENTE */
-    .book-spine::before {
-      content: "✦ ⚜ ✦";
+    /* NAVIGATION PFEIL */
+    .shelf-nav {
       position: absolute;
-      top: 18px; left: 0; right: 0;
-      text-align: center;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 40px;
       color: #d4af37;
-      font-size: 12px;
-      letter-spacing: 4px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.95);
-      z-index: 2;
+      cursor: pointer;
+      z-index: 10;
+      text-shadow: 0 0 10px #000;
+      transition: all 0.3s;
     }
+    .shelf-nav:hover { scale: 1.2; color: #fff; }
 
-    .book-spine::after {
-      content: "";
-      position: absolute;
-      top: 10px; left: 8px; right: 8px; bottom: 10px;
-      border: 2px double rgba(212, 175, 55, 0.85);
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-      pointer-events: none;
-    }
-
-    .spine-title {
-      transform: rotate(90deg);
-      color: #fce7a2;
-      font-family: 'Cinzel', serif;
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: 3px;
-      white-space: nowrap;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 12px rgba(212, 175, 55, 0.5);
-      text-transform: uppercase;
-      z-index: 3;
-    }
-
-    .spine-author {
-      position: absolute;
-      bottom: 18px;
-      color: #d4af37;
-      font-family: 'Cinzel', serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-shadow: 0 2px 5px rgba(0,0,0,0.98);
-      z-index: 4;
-    }
-
-    /* POPUP & FLÜSSIGES AUFKLAPPEN */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.88);
-      backdrop-filter: blur(8px);
-      z-index: 9999;
-      display: none;
+    /* BUCHRÜCKEN STYLES */
+    .book-spine {
+      width: 100px;
+      height: 320px;
+      border-radius: 4px 10px 10px 4px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: -10px 5px 15px rgba(0, 0, 0, 0.8), inset 5px 0 10px rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
+      display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0;
-      transition: opacity 0.35s ease;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
-    .modal-overlay.active {
-      display: flex;
-      opacity: 1;
-    }
+    .book-spine:hover { transform: translateY(-15px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
 
+    /* FARBEN */
+    .alex { background: linear-gradient(90deg, #180303, #5d1212, #1c0404); border-color: #942424; }
+    .ciro { background: linear-gradient(90deg, #030f0a, #124733, #04120c); border-color: #207354; }
+    .blue { background: linear-gradient(90deg, #020a1a, #122c5d, #040c1c); border-color: #244694; }
+    .purple { background: linear-gradient(90deg, #12021a, #3f125d, #0e041c); border-color: #652494; }
+    .pink { background: linear-gradient(90deg, #1a020f, #5d123b, #1c0412); border-color: #94245d; }
+    .orange { background: linear-gradient(90deg, #1a0b02, #5d3412, #1c0f04); border-color: #945324; }
+    .brown { background: linear-gradient(90deg, #150d0a, #3b2519, #150d0a); border-color: #4a2e1d; }
+    .white { background: linear-gradient(90deg, #1a1a1a, #555, #1a1a1a); border-color: #888; }
+
+    /* ORNAMENTE */
+    .book-spine::before {
+      content: "✦ ⚜ ✦"; position: absolute; top: 15px; color: #d4af37; font-size: 10px; letter-spacing: 2px;
+    }
+    .book-spine::after {
+      content: ""; position: absolute; top: 8px; left: 6px; right: 6px; bottom: 8px; border: 1px double rgba(212, 175, 55, 0.6);
+    }
+    .spine-title {
+      transform: rotate(90deg); color: #fce7a2; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; white-space: nowrap; text-shadow: 0 1px 4px #000;
+    }
+    .spine-ss { position: absolute; bottom: 15px; color: #d4af37; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; }
+
+    /* MODAL / BUCH ÖFFNEN */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(8px); z-index: 100; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.4s;
+    }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    
     .interactive-book {
-      width: 92%;
-      max-width: 580px;
-      height: 85vh;
-      background: #bd9b70;
-      background-image: 
-        radial-gradient(ellipse at center, rgba(240, 220, 185, 0.35) 0%, rgba(135, 95, 55, 0.5) 75%, rgba(60, 35, 15, 0.85) 100%),
-        linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.3) 100%);
-      border: 3px solid #420808;
-      border-radius: 8px 14px 14px 8px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.95);
-      padding: 30px 22px 60px 22px;
-      box-sizing: border-box;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      transform: scale(0.6) rotateY(-40deg);
-      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1.2);
+      width: 90%; max-width: 500px; height: 80vh; background: #bd9b70;
+      border: 3px solid #420808; border-radius: 8px 15px 15px 8px; padding: 30px;
+      box-shadow: 0 0 50px #000; display: flex; flex-direction: column; position: relative;
     }
 
-    .modal-overlay.active .interactive-book {
-      transform: scale(1) rotateY(0deg);
-    }
-
-    .book-header {
-      font-family: 'Cinzel', serif;
-      font-size: 24px;
-      color: #3b0505;
-      text-align: center;
-      border-bottom: 2px dashed #570b0b;
-      padding-bottom: 12px;
-      margin-bottom: 15px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-
-    .book-body {
-      flex: 1;
-      overflow-y: auto;
-      color: #1a0a03;
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
-    .page-turn-anim {
-      animation: pageTurn 0.35s ease-in-out;
-    }
-
-    @keyframes pageTurn {
-      0% { transform: rotateY(0deg); opacity: 1; }
-      50% { transform: rotateY(-80deg); opacity: 0.2; }
-      100% { transform: rotateY(0deg); opacity: 1; }
-    }
-
-    .book-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 15px;
-      border-top: 1px dashed rgba(87, 11, 11, 0.4);
-      padding-top: 12px;
-    }
-
-    .nav-btn {
-      background: #420808;
-      color: #fce7a2;
-      border: 1px solid #570b0b;
-      padding: 8px 18px;
-      font-family: 'Cinzel', serif;
-      font-size: 13px;
-      font-weight: 700;
-      border-radius: 4px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: all 0.2s;
-    }
-
-    .nav-btn:hover {
-      background: #8b0000;
-      color: #ffffff;
-    }
-
-    .page-indicator {
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      color: #420808;
-      letter-spacing: 1.5px;
-    }
-
-    .close-modal-btn {
-      position: absolute;
-      bottom: 15px;
-      right: 22px;
-      font-size: 14px;
-      font-weight: bold;
-      color: #8b0000;
-      background: rgba(60, 10, 10, 0.15);
-      border: 1px solid #8b0000;
-      border-radius: 6px;
-      padding: 4px 12px;
-      cursor: pointer;
-      font-family: 'Outfit', sans-serif;
-    }
-
-    .close-modal-btn:hover {
-      background: #8b0000;
-      color: #ffffff;
-    }
+    .book-header { font-family: 'Cinzel', serif; font-size: 20px; color: #3b0505; text-align: center; border-bottom: 2px dashed #420808; padding-bottom: 10px; margin-bottom: 20px; font-weight: 900; }
+    .book-body { flex: 1; overflow-y: auto; color: #1a0a03; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.6; }
+    .book-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; border-top: 1px dashed #420808; padding-top: 10px; }
+    
+    .nav-btn { background: #420808; color: #fce7a2; border: none; padding: 8px 15px; font-family: 'Cinzel', serif; cursor: pointer; border-radius: 4px; }
+    .page-indicator { color: #420808; font-weight: 700; font-family: 'Cinzel', serif; }
+    .close-btn { position: absolute; bottom: 10px; right: 20px; color: #8b0000; cursor: pointer; font-weight: 700; background: none; border: none; }
   </style>
 </head>
 <body>
 
   <div class="container">
     <h1>S.S.</h1>
-    <h2>✦ Architect of the Dark & Beautiful ✦</h2>
-
+    <h2>✦ Archive of the Eternal ✦</h2>
     <hr>
 
-    <h3>Willkommen in meinem Archiv</h3>
+    <div class="shelf-wrapper">
+      <div class="shelf-nav" id="nextBtn" onclick="toggleShelf()">❯</div>
+      
+      <div class="books-container" id="bookshelf">
+        <div class="shelf-set">
+          <div class="book-spine alex" onclick="openBook('alex')">
+            <div class="spine-title">Alex (Ethyalexia)</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+          <div class="book-spine ciro" onclick="openBook('ciro')">
+            <div class="spine-title">Ciro (Cyrus)</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+          <div class="book-spine blue" onclick="openBook('blue')">
+            <div class="spine-title">Blue Archive</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+          <div class="book-spine purple" onclick="openBook('purple')">
+            <div class="spine-title">Purple Archive</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+        </div>
 
-    <blockquote>
-      <strong>STATUS:</strong> Sehr aktiv ✦<br>
-      <strong>SCHWERPUNKT:</strong> Erweiterung der Charaktergeschichten & Immersive Welten.<br><br>
-      <em>Betreten auf eigene Gefahr. Die Schatten hier beißen zurück.</em>
-    </blockquote>
-
-    <div style="text-align: center; margin-bottom: 20px;">
-      <span class="badge">Düstere Romantik</span>
-      <span class="badge">Originalgeschichte</span>
-      <span class="badge">Vampire</span>
-      <span class="badge">Langsame Entwicklung</span>
-      <span class="badge">Dark Academia</span>
-      <span class="badge">Beliebige Perspektive</span>
-      <span class="badge">MLM</span>
-      <span class="badge">WLW</span>
-      <span class="badge">18+</span>
+        <div class="shelf-set">
+          <div class="book-spine pink" onclick="openBook('pink')">
+            <div class="spine-title">Volume III</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+          <div class="book-spine orange" onclick="openBook('orange')">
+            <div class="spine-title">Volume IV</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+          <div class="book-spine brown" onclick="openBook('brown')">
+            <div class="spine-title">Volume V</div>
+            <div class="spine-ss">S.S.</div>
+          </div>
+          <div class="book-spine white" onclick="openBook('white')">
+            <div class="spine-title" style="color: #333; text-shadow: none;">Volume VI</div>
+            <div class="spine-ss" style="color: #333;">S.S.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <hr>
-
-    <h3>📖 Das Archiv (Tippe auf ein Buch, um es zu öffnen)</h3>
-
-    <div class="bookshelf">
-      <div class="book-spine alex" onclick="openBook('alex')">
-        <div class="spine-title">Alex (Ethyalexia)</div>
-        <div class="spine-author">S.S.</div>
-      </div>
-      <div class="book-spine ciro" onclick="openBook('ciro')">
-        <div class="spine-title">Ciro (Cyrus)</div>
-        <div class="spine-author">S.S.</div>
-      </div>
-    </div>
-
-    <hr>
-
-    <h3>✦ Das Eheversprechen</h3>
-
-    <blockquote>
-      <strong>Die Beziehungsdynamik:</strong><br>
-      Ciro verliebte sich zuerst – fasziniert vom Kontrast zwischen Alex' tödlicher Aura und ihrer inneren Stille.<br><br>
-      Heute heilen sie gegenseitig ihre Traumata: Alex erfährt bedingungslose Akzeptanz, während Ciro lernt, dass wahre Liebe nicht aus Angst klammert, sondern in Freiheit versteht.
+    <blockquote style="text-align: center; border: none; background: rgba(18,10,10,0.8); padding: 20px; border-radius: 10px;">
+      <i>"In every shadow, a story waits. In every book, a soul is kept."</i><br>
+      <span style="color: #d4af37;">✦ S.S. ✦</span>
     </blockquote>
-
-    <p style="text-align: center; font-style: italic; color: #d4af37; font-size: 13px; margin-top: 30px;">
-      ✦ Benutzerdefinierter Profilcode & Hintergrundgeschichte für S.S. ✦
-    </p>
   </div>
 
   <div class="modal-overlay" id="modal">
     <div class="interactive-book">
-      <div class="book-header" id="bookTitle">Buch Titel</div>
-      <div class="book-body" id="bookContent">
-        </div>
+      <div class="book-header" id="bookTitle">Titel</div>
+      <div class="book-body" id="bookContent">Inhalt</div>
       <div class="book-controls">
-        <button class="nav-btn" onclick="changePage(-1)">&lt; Zurück</button>
-        <span class="page-indicator" id="pageIndicator">Seite 1 / 12</span>
-        <button class="nav-btn" onclick="changePage(1)">Weiter &gt;</button>
+        <button class="nav-btn" onclick="changePage(-1)">❮</button>
+        <span class="page-indicator" id="pageIndicator">1 / 12</span>
+        <button class="nav-btn" onclick="changePage(1)">❯</button>
       </div>
-      <button class="close-modal-btn" onclick="closeBook()">✕ Schließen</button>
+      <button class="close-btn" onclick="closeBook()">✕ Schließen</button>
     </div>
   </div>
 
   <script>
-    const alexPages = [
-      "<b>1. Profil & Erscheinung:</b><br>✦ Alter: 44 Jahre • 21. Dezember<br>✦ Größe: 1.90 m<br>✦ Merkmale: Blasse Haut, rote Augen, langes weißes Haar.",
-      "<b>2. Psychologie & Trauma:</b><br>Aufgewachsen in kühler Familie. Mit 21 Jahren von einem Vampir verwandelt, was sein Leben auf düstere Weise rettete.",
-      "<b>3. Fähigkeiten:</b><br>Übernatürliche Geschwindigkeit, lautloses Bewegen, Herzschlag-Wahrnehmung.",
-      "<b>4. Alltag:</b><br>Nachtaktiv. Zeichnet, liest und spielt heimlich Klavier und Violine.",
-      "<b>5. Geheimnisse:</b><br>Tief verborgene Kapitel seiner Vergangenheit...",
-      "<b>6. Zeitleiste:</b><br>Wichtige historische Wendepunkte...",
-      "<b>7. Beziehungen:</b><br>Verbindungen zu anderen Gefährten...",
-      "<b>8. Erschaffer-Lore:</b><br>Details über den Vampir, der ihn erschuf...",
-      "<b>9. Besitztümer:</b><br>Sein Ehering und alte Erbstücke...",
-      "<b>10. Kunst & Musik:</b><br>Kompositionen und Skizzen...",
-      "<b>11. Dunkle Chroniken:</b><br>Auszüge aus alten Tagebüchern...",
-      "<b>12. Letzter Eintrag:</b><br>Ende des ersten Bandes."
-    ];
+    const data = {
+      alex: ["<b>1. Profil:</b> Alex...", "<b>2. Trauma:</b>...", "Seite 3", "Seite 4", "Seite 5", "Seite 6", "Seite 7", "Seite 8", "Seite 9", "Seite 10", "Seite 11", "Seite 12"],
+      ciro: ["<b>1. Profil:</b> Ciro...", "<b>2. Trauma:</b>...", "Seite 3", "Seite 4", "Seite 5", "Seite 6", "Seite 7", "Seite 8", "Seite 9", "Seite 10", "Seite 11", "Seite 12"],
+      blue: Array(12).fill("Leere Seite (Blaues Archiv)"),
+      purple: Array(12).fill("Leere Seite (Lila Archiv)"),
+      pink: Array(12).fill("Leere Seite (Band III)"),
+      orange: Array(12).fill("Leere Seite (Band IV)"),
+      brown: Array(12).fill("Leere Seite (Band V)"),
+      white: Array(12).fill("Leere Seite (Band VI)")
+    };
 
-    const ciroPages = [
-      "<b>1. Profil & Erscheinung:</b><br>✦ Alter: 47 Jahre • 12. Juli<br>✦ Größe: 1.82 m<br>✦ Merkmale: Schwarze Locken, braune Augen, Schnurrbart.",
-      "<b>2. Trauma & Vergangenheit:</b><br>Mit 15 verlor er seinen Bruder Xavier an die Mafia. Seine charmante Art schützt ihn vor Verlustangst.",
-      "<b>3. Fähigkeiten & Kampf:</b><br>Meister im Nahkampf durch Jahre im Untergrund, analytischer Verstand.",
-      "<b>4. Alltag:</b><br>Tagaktiv. Erfolgreicher Geschäftsmann, kocht leidenschaftlich gerne für Alex.",
-      "<b>5. Unternehmen:</b><br>Details zu seinen geschäftlichen Verbindungen...",
-      "<b>6. Mafia-Jahre:</b><br>Auszüge aus seinen Überlebensjahren...",
-      "<b>7. Strategie:</b><br>Taktische Aufzeichnungen...",
-      "<b>8. Erinnerungen:</b><br>Gedanken an seinen Bruder Xavier...",
-      "<b>9. Gemeinsames Heim:</b><br>Rezepte und ruhige Momente...",
-      "<b>10. Waffen:</b><br>Bevorzugte Ausrüstung...",
-      "<b>11. Zukunft:</b><br>Ungesagte Versprechen...",
-      "<b>12. Letzter Eintrag:</b><br>Ende des zweiten Bandes."
-    ];
+    let currentSet = 1;
+    let currentBookKey = '';
+    let currentPage = 0;
 
-    let currentBook = [];
-    let currentPageIndex = 0;
-
-    function openBook(type) {
-      if(type === 'alex') {
-        document.getElementById('bookTitle').innerText = "Alex (Ethyalexia)";
-        currentBook = alexPages;
+    function toggleShelf() {
+      const shelf = document.getElementById('bookshelf');
+      const btn = document.getElementById('nextBtn');
+      if(currentSet === 1) {
+        shelf.style.transform = 'translateX(-50%)';
+        btn.innerText = '❮';
+        currentSet = 2;
       } else {
-        document.getElementById('bookTitle').innerText = "Ciro (Cyrus)";
-        currentBook = ciroPages;
+        shelf.style.transform = 'translateX(0)';
+        btn.innerText = '❯';
+        currentSet = 1;
       }
+    }
 
-      currentPageIndex = 0;
+    function openBook(key) {
+      currentBookKey = key;
+      currentPage = 0;
+      document.getElementById('bookTitle').innerText = key.toUpperCase();
       renderPage();
       document.getElementById('modal').classList.add('active');
     }
 
-    function closeBook() {
-      document.getElementById('modal').classList.remove('active');
-    }
-
     function renderPage() {
-      const content = document.getElementById('bookContent');
-      content.classList.add('page-turn-anim');
-      content.innerHTML = currentBook[currentPageIndex];
-      document.getElementById('pageIndicator').innerText = `Seite ${currentPageIndex + 1} / ${currentBook.length}`;
-      
-      setTimeout(() => {
-        content.classList.remove('page-turn-anim');
-      }, 350);
+      document.getElementById('bookContent').innerHTML = data[currentBookKey][currentPage];
+      document.getElementById('pageIndicator').innerText = `${currentPage + 1} / 12`;
     }
 
-    function changePage(direction) {
-      const newIndex = currentPageIndex + direction;
-      if (newIndex >= 0 && newIndex < currentBook.length) {
-        currentPageIndex = newIndex;
+    function changePage(dir) {
+      let next = currentPage + dir;
+      if(next >= 0 && next < 12) {
+        currentPage = next;
         renderPage();
       }
     }
-  </script>
 
+    function closeBook() { document.getElementById('modal').classList.remove('active'); }
+  </script>
 </body>
 </html>
