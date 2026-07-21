@@ -1,1 +1,399 @@
+<style>
+  /* =========================================
+     S.S. MASTER CSS - REALISTIC 3D LORE BOOKS
+     ========================================= */
+  
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500&display=swap');
 
+  /* --- GLOBAL BACKGROUND --- */
+  body {
+    background-color: #0a0707 !important;
+    background-image: 
+      radial-gradient(circle at 50% 20%, rgba(139, 0, 0, 0.15), transparent 70%),
+      radial-gradient(circle at 50% 80%, rgba(212, 175, 55, 0.08), transparent 70%) !important;
+    color: #e3d5ca !important;
+    font-family: 'Outfit', sans-serif !important;
+    line-height: 1.6 !important;
+  }
+
+  /* --- HEADERS --- */
+  h1 {
+    font-family: 'Cinzel', serif !important;
+    font-size: 38px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    color: #d4af37 !important;
+    letter-spacing: 5px !important;
+    margin-top: 20px !important;
+    margin-bottom: 5px !important;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4) !important;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 18px !important;
+    font-style: italic !important;
+    color: #8b0000 !important;
+    text-align: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 30px !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* --- TAGS & BADGES --- */
+  code {
+    background: rgba(20, 10, 10, 0.9) !important;
+    color: #d4af37 !important;
+    border: 1px solid rgba(139, 0, 0, 0.6) !important;
+    border-radius: 6px !important;
+    padding: 5px 10px !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    margin: 3px !important;
+    display: inline-block !important;
+  }
+
+  blockquote {
+    background: rgba(18, 10, 10, 0.85) !important;
+    border-left: 3px solid #8b0000 !important;
+    border-right: 1px solid rgba(212, 175, 55, 0.2) !important;
+    border-radius: 10px !important;
+    padding: 15px 18px !important;
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-size: 15px !important;
+    color: #c9bcae !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.8) !important;
+    margin: 15px 0 !important;
+  }
+
+  /* =========================================
+     ULTRA-REALISTIC WOODEN BOOKSHELF
+     ========================================= */
+
+  table {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 22px !important;
+    background-color: #5c3519 !important;
+    background-image: 
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.45) 0px, rgba(0, 0, 0, 0.45) 2px, transparent 3px, transparent 95px, rgba(0, 0, 0, 0.45) 96px, rgba(0, 0, 0, 0.45) 98px),
+      repeating-linear-gradient(90deg, #825028 0px, #5c3519 20px, #945d31 40px, #4f2c13 65px, #7d4b24 85px, #5c3519 100px),
+      radial-gradient(ellipse at center, rgba(168, 110, 62, 0.4) 0%, rgba(30, 15, 5, 0.6) 100%) !important;
+    padding: 35px 22px 0px 22px !important;
+    border-top: 8px solid #4a2913 !important;
+    border-left: 6px solid #331a0a !important;
+    border-right: 6px solid #331a0a !important;
+    border-bottom: 24px solid #42230e !important;
+    border-radius: 6px !important;
+    box-shadow: 
+      inset 0 25px 35px rgba(0, 0, 0, 0.8),
+      0 4px 0 #6e3d1a,
+      0 20px 35px rgba(0, 0, 0, 0.95) !important;
+    margin-top: 25px !important;
+    border-collapse: separate !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+  }
+
+  th { display: none !important; }
+
+  tbody, tr {
+    display: flex !important;
+    gap: 22px !important;
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+  }
+
+  /* CLOSED REALISTIC 3D BOOKS */
+  td {
+    width: 48% !important;
+    max-width: 175px !important;
+    height: 380px !important;
+    border-radius: 8px 16px 16px 8px !important;
+    overflow: hidden !important;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    position: relative !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+    box-shadow: 
+      -16px 10px 22px rgba(0, 0, 0, 0.85),
+      0 12px 18px 4px rgba(0, 0, 0, 0.95),
+      0 3px 6px rgba(0, 0, 0, 0.98),
+      inset 10px 0 15px rgba(255, 255, 255, 0.25),
+      inset -8px 0 12px rgba(0, 0, 0, 0.8) !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Book Covers */
+  td:nth-child(1) { 
+    background: 
+      linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.4) 16%, rgba(255,255,255,0.1) 18%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 81%, rgba(255,255,255,0.1) 83%, transparent 85%),
+      linear-gradient(90deg, #180303 0%, #5d1212 35%, #3d0a0a 75%, #1c0404 100%) !important; 
+    border: 1px solid #942424 !important;
+  }
+
+  td:nth-child(2) { 
+    background: 
+      linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.4) 16%, rgba(255,255,255,0.1) 18%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 81%, rgba(255,255,255,0.1) 83%, transparent 85%),
+      linear-gradient(90deg, #030f0a 0%, #124733 35%, #0b2b1e 75%, #04120c 100%) !important; 
+    border: 1px solid #207354 !important;
+  }
+
+  /* Decorative Ornaments */
+  td::before {
+    content: "✦ ⚜ ✦" !important;
+    position: absolute !important;
+    top: 18px !important; left: 0 !important; right: 0 !important;
+    text-align: center !important;
+    color: #d4af37 !important;
+    font-size: 12px !important;
+    letter-spacing: 4px !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.95) !important;
+    z-index: 2 !important;
+  }
+
+  td::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 10px !important; left: 8px !important; right: 8px !important; bottom: 10px !important;
+    border: 2px double rgba(212, 175, 55, 0.85) !important;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8) !important;
+    pointer-events: none !important;
+  }
+
+  td h4 {
+    position: absolute !important;
+    top: 50% !important; left: 50% !important;
+    transform: translate(-50%, -50%) rotate(90deg) !important;
+    color: #fce7a2 !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+    letter-spacing: 3px !important;
+    white-space: nowrap !important;
+    width: 250px !important;
+    text-align: center !important;
+    margin: 0 !important;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 12px rgba(212, 175, 55, 0.5) !important;
+    text-transform: uppercase !important;
+    z-index: 3 !important;
+  }
+
+  td span.author-tag {
+    position: absolute !important;
+    bottom: 18px !important; left: 0 !important; right: 0 !important;
+    text-align: center !important;
+    color: #d4af37 !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 3px !important;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.98), 0 0 8px rgba(212, 175, 55, 0.4) !important;
+    z-index: 4 !important;
+    display: block !important;
+  }
+
+  /* Hide popup container when closed */
+  .book-popup {
+    display: none;
+  }
+
+  /* OPEN BOOK POPUP */
+  td:hover .book-popup, td:active .book-popup {
+    display: block !important;
+    position: fixed !important;
+    top: 5% !important; left: 4% !important; right: 4% !important;
+    width: 92% !important; max-width: 600px !important;
+    height: 88vh !important;
+    margin: 0 auto !important;
+    z-index: 99999 !important;
+    background: #bd9b70 !important;
+    background-image: 
+      radial-gradient(ellipse at center, rgba(240, 220, 185, 0.35) 0%, rgba(135, 95, 55, 0.5) 75%, rgba(60, 35, 15, 0.85) 100%),
+      radial-gradient(circle at 10% 10%, rgba(30, 15, 5, 0.5), transparent 30%),
+      radial-gradient(circle at 90% 90%, rgba(30, 15, 5, 0.5), transparent 30%),
+      linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 6%, transparent 94%, rgba(0,0,0,0.3) 100%) !important;
+    border-radius: 8px 14px 14px 8px !important;
+    border: 3px solid #420808 !important;
+    padding: 30px 22px 60px 22px !important;
+    box-shadow: 0 0 0 1000px rgba(0,0,0,0.9), 0 25px 60px rgba(0,0,0,0.95) !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Hide spine text/decorations when opened */
+  td:hover::before, td:active::before,
+  td:hover::after, td:active::after,
+  td:hover span.author-tag, td:active span.author-tag {
+    display: none !important;
+  }
+
+  td:hover h4, td:active h4 {
+    position: relative !important;
+    transform: none !important;
+    top: auto !important; left: auto !important;
+    color: #3b0505 !important;
+    width: 100% !important;
+    text-align: center !important;
+    border-bottom: 2px dashed #570b0b !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 15px !important;
+    text-shadow: none !important;
+    font-size: 24px !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* =========================================
+     PAGE NAVIGATION SYSTEM (1 - 12)
+     ========================================= */
+
+  /* Radio Controls */
+  .page-radio {
+    display: none !important;
+  }
+
+  /* Page Content Container */
+  .page-content {
+    display: none;
+    color: #1a0a03 !important;
+    font-family: 'Playfair Display', serif !important;
+    font-size: 14.5px !important;
+    line-height: 1.7 !important;
+  }
+
+  /* Show active page based on checked radio button */
+  #alex-p1:checked ~ .p1, #alex-p2:checked ~ .p2, #alex-p3:checked ~ .p3, #alex-p4:checked ~ .p4,
+  #alex-p5:checked ~ .p5, #alex-p6:checked ~ .p6, #alex-p7:checked ~ .p7, #alex-p8:checked ~ .p8,
+  #alex-p9:checked ~ .p9, #alex-p10:checked ~ .p10, #alex-p11:checked ~ .p11, #alex-p12:checked ~ .p12,
+  #ciro-p1:checked ~ .p1, #ciro-p2:checked ~ .p2, #ciro-p3:checked ~ .p3, #ciro-p4:checked ~ .p4,
+  #ciro-p5:checked ~ .p5, #ciro-p6:checked ~ .p6, #ciro-p7:checked ~ .p7, #ciro-p8:checked ~ .p8,
+  #ciro-p9:checked ~ .p9, #ciro-p10:checked ~ .p10, #ciro-p11:checked ~ .p11, #ciro-p12:checked ~ .p12 {
+    display: block !important;
+  }
+
+  /* NEXT PAGE BUTTON (Right Middle ">") */
+  .next-btn {
+    position: fixed !important;
+    right: 6% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 32px !important;
+    font-weight: bold !important;
+    color: #420808 !important;
+    background: rgba(240, 220, 185, 0.7) !important;
+    border: 2px solid #570b0b !important;
+    border-radius: 50% !important;
+    width: 45px !important;
+    height: 45px !important;
+    line-height: 38px !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important;
+    transition: all 0.2s ease !important;
+    z-index: 100000 !important;
+  }
+
+  .next-btn:hover {
+    background: #420808 !important;
+    color: #fce7a2 !important;
+    scale: 1.1 !important;
+  }
+
+  /* PAGE NUMBER COUNTER (Bottom Center) */
+  .page-num {
+    position: absolute !important;
+    bottom: 18px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #420808 !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* CLOSE BUTTON (Bottom "✕") */
+  .close-btn {
+    position: absolute !important;
+    bottom: 15px !important;
+    right: 25px !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    color: #8b0000 !important;
+    background: rgba(60, 10, 10, 0.15) !important;
+    border: 1px solid #8b0000 !important;
+    border-radius: 6px !important;
+    padding: 2px 10px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .close-btn:hover {
+    background: #8b0000 !important;
+    color: #ffffff !important;
+  }
+
+  /* Inner Formatting Styles */
+  .lore-section {
+    margin-bottom: 18px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px dashed rgba(80, 10, 10, 0.35) !important;
+  }
+
+  .lore-title {
+    font-family: 'Cinzel', serif !important;
+    font-weight: 700 !important;
+    color: #5c0a0a !important;
+    font-size: 16px !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+  }
+
+  /* Scrollbar Inside Open Book */
+  td::-webkit-scrollbar, .book-popup::-webkit-scrollbar { width: 5px !important; }
+  td::-webkit-scrollbar-thumb, .book-popup::-webkit-scrollbar-thumb { background: #420808 !important; border-radius: 3px !important; }
+</style>
+
+# S.S.
+## ✦ Architect of the Dark & Beautiful ✦
+
+---
+
+### Welcome to my Archive
+
+> **STATUS:** Very Active ✦ 
+> **FOCUS:** Expanding Character Lore & Immersive Worlds.
+> 
+> *Enter at your own risk. The shadows here bite back.*
+
+`Dark Romance` `Original Lore` `Vampires` `Slow Burn` `Dark Academia` `AnyPOV` `MLM` `WLW` `18+`
+
+---
+
+### 📖 The Archives (Tap a book to open)
+
+| | |
+|---|---|
+| <h4>Alex (Ethyalexia)</h4> <span class="author-tag">S.S.</span> <div class="book-popup"> <input type="radio" name="alex-page" id="alex-p1" class="page-radio" checked> <input type="radio" name="alex-page" id="alex-p2" class="page-radio"> <input type="radio" name="alex-page" id="alex-p3" class="page-radio"> <input type="radio" name="alex-page" id="alex-p4" class="page-radio"> <input type="radio" name="alex-page" id="alex-p5" class="page-radio"> <input type="radio" name="alex-page" id="alex-p6" class="page-radio"> <input type="radio" name="alex-page" id="alex-p7" class="page-radio"> <input type="radio" name="alex-page" id="alex-p8" class="page-radio"> <input type="radio" name="alex-page" id="alex-p9" class="page-radio"> <input type="radio" name="alex-page" id="alex-p10" class="page-radio"> <input type="radio" name="alex-page" id="alex-p11" class="page-radio"> <input type="radio" name="alex-page" id="alex-p12" class="page-radio"> <div class="page-content p1"> <div class="lore-section"> <span class="lore-title">1. General Profile & Appearance</span> ✦ <b>Age & Birthday:</b> 44 Years • December 21st<br> ✦ <b>Height:</b> 1.90 m (6'3")<br> ✦ <b>Physical Features:</b> Extremely pale skin, striking red eyes, long white hair.<br> ✦ <b>Clothing Style:</b> Almost exclusively elegant, pitch-black attire with a long coat and black gloves.<br> ✦ <b>Distinguishing Marks:</b> Known worldwide as "the long-haired white vampire". </div> <label for="alex-p2" class="next-btn">&gt;</label> <span class="page-num">1 - 12</span> </div> <div class="page-content p2"> <div class="lore-section"> <span class="lore-title">2. Psychology & Childhood Trauma</span> Raised in a wealthy yet emotionally cold family who wanted a daughter. At age 21, severe isolation nearly drove him to the edge—until a vampire transformed him as an "experiment," unknowingly saving his life. </div> <label for="alex-p3" class="next-btn">&gt;</label> <span class="page-num">2 - 12</span> </div> <div class="page-content p3"> <div class="lore-section"> <span class="lore-title">3. Abilities & Traits</span> Supernatural speed, silent movement, hyper-sensory perception (hearing heartbeats), and aura control. His existence demands a daily, disciplined struggle to maintain his humanity. </div> <label for="alex-p4" class="next-btn">&gt;</label> <span class="page-num">3 - 12</span> </div> <div class="page-content p4"> <div class="lore-section"> <span class="lore-title">4. Daily Life & Habits</span> Creature of the night. In the silence of darkness, he draws, reads, and secretly plays piano and violin with master proficiency. </div> <label for="alex-p5" class="next-btn">&gt;</label> <span class="page-num">4 - 12</span> </div> <div class="page-content p5"><div class="lore-section"><span class="lore-title">5. Secrets & Mysteries</span> Additional character secrets go here...</div><label for="alex-p6" class="next-btn">&gt;</label><span class="page-num">5 - 12</span></div> <div class="page-content p6"><div class="lore-section"><span class="lore-title">6. Historical Timeline</span> Key historical events...</div><label for="alex-p7" class="next-btn">&gt;</label><span class="page-num">6 - 12</span></div> <div class="page-content p7"><div class="lore-section"><span class="lore-title">7. Relationships</span> Connection details to other characters...</div><label for="alex-p8" class="next-btn">&gt;</label><span class="page-num">7 - 12</span></div> <div class="page-content p8"><div class="lore-section"><span class="lore-title">8. Vampire Sire Lore</span> Details about his creator observing him...</div><label for="alex-p9" class="next-btn">&gt;</label><span class="page-num">8 - 12</span></div> <div class="page-content p9"><div class="lore-section"><span class="lore-title">9. Personal Belongings</span> His wedding ring and heirlooms...</div><label for="alex-p10" class="next-btn">&gt;</label><span class="page-num">9 - 12</span></div> <div class="page-content p10"><div class="lore-section"><span class="lore-title">10. Music & Art Notes</span> Compositions and sketches...</div><label for="alex-p11" class="next-btn">&gt;</label><span class="page-num">10 - 12</span></div> <div class="page-content p11"><div class="lore-section"><span class="lore-title">11. Dark Chronicles</span> Extra story excerpts...</div><label for="alex-p12" class="next-btn">&gt;</label><span class="page-num">11 - 12</span></div> <div class="page-content p12"><div class="lore-section"><span class="lore-title">12. Final Archive Entry</span> End of Alex's volume.</div><label for="alex-p1" class="next-btn">&gt;</label><span class="page-num">12 - 12</span></div> <div class="close-btn">✕ Schließen</div> </div> | <h4>Ciro (Cyrus)</h4> <span class="author-tag">S.S.</span> <div class="book-popup"> <input type="radio" name="ciro-page" id="ciro-p1" class="page-radio" checked> <input type="radio" name="ciro-page" id="ciro-p2" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p3" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p4" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p5" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p6" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p7" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p8" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p9" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p10" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p11" class="page-radio"> <input type="radio" name="ciro-page" id="ciro-p12" class="page-radio"> <div class="page-content p1"> <div class="lore-section"> <span class="lore-title">1. General Profile & Appearance</span> ✦ <b>Age & Birthday:</b> 47 Years • July 12th<br> ✦ <b>Height:</b> 1.82 m (6'0")<br> ✦ <b>Physical Features:</b> Shoulder-length black curly hair, warm brown eyes, neat black mustache.<br> ✦ <b>Clothing Style:</b> Elegant black-and-white wardrobe matched with Alex.<br> ✦ <b>Distinguishing Marks:</b> White stud earring belonging to his late brother Xavier. </div> <label for="ciro-p2" class="next-btn">&gt;</label> <span class="page-num">1 - 12</span> </div> <div class="page-content p2"> <div class="lore-section"> <span class="lore-title">2. Psychology & Trauma</span> At age 15, his older brother Xavier was taken by the mafia and executed. Ciro's playful and charming persona acts as a protective shield for deep fear of loss. </div> <label for="ciro-p3" class="next-btn">&gt;</label> <span class="page-num">2 - 12</span> </div> <div class="page-content p3"> <div class="lore-section"> <span class="lore-title">3. Skills & Combat</span> Master of close-quarters combat through years of survival in mafia structures, and a brilliant analytical mind. </div> <label for="ciro-p4" class="next-btn">&gt;</label> <span class="page-num">3 - 12</span> </div> <div class="page-content p4"> <div class="lore-section"> <span class="lore-title">4. Daily Life & Habits</span> Day worker. Successful businessman, loves animals and children, and passionately cooks for Alex as a gesture of true "home." </div> <label for="ciro-p5" class="next-btn">&gt;</label> <span class="page-num">4 - 12</span> </div> <div class="page-content p5"><div class="lore-section"><span class="lore-title">5. Business Endeavors</span> Details on his enterprises...</div><label for="ciro-p6" class="next-btn">&gt;</label><span class="page-num">5 - 12</span></div> <div class="page-content p6"><div class="lore-section"><span class="lore-title">6. Mafia Past</span> Excerpts from his survival years...</div><label for="ciro-p7" class="next-btn">&gt;</label><span class="page-num">6 - 12</span></div> <div class="page-content p7"><div class="lore-section"><span class="lore-title">7. Tactical Analysis</span> Strategy notes...</div><label for="ciro-p8" class="next-btn">&gt;</label><span class="page-num">7 - 12</span></div> <div class="page-content p8"><div class="lore-section"><span class="lore-title">8. Family Memories</span> Memories of Xavier...</div><label for="ciro-p9" class="next-btn">&gt;</label><span class="page-num">8 - 12</span></div> <div class="page-content p9"><div class="lore-section"><span class="lore-title">9. Shared Home Life</span> Cooking recipes & quiet moments...</div><label for="ciro-p10" class="next-btn">&gt;</label><span class="page-num">9 - 12</span></div> <div class="page-content p10"><div class="lore-section"><span class="lore-title">10. Personal Weapons</span> Preferred gear...</div><label for="ciro-p11" class="next-btn">&gt;</label><span class="page-num">10 - 12</span></div> <div class="page-content p11"><div class="lore-section"><span class="lore-title">11. Future Plans</span> Unspoken promises...</div><label for="ciro-p12" class="next-btn">&gt;</label><span class="page-num">11 - 12</span></div> <div class="page-content p12"><div class="lore-section"><span class="lore-title">12. Final Archive Entry</span> End of Ciro's volume.</div><label for="ciro-p1" class="next-btn">&gt;</label><span class="page-num">12 - 12</span></div> <div class="close-btn">✕ Schließen</div> </div> |
+
+---
+
+### ✦ The Vow of Marriage
+
+> **The Relationship Dynamic:**
+> Ciro fell in love first—captivated by the contrast between Alex's deadly aura and inner stillness. The turning point occurred in quiet solitude on a simple bench through a gentle kiss.
+> 
+> Today, they heal each other's trauma: Alex receives unconditional acceptance, while Ciro learns that true love does not cling out of fear, but understands in freedom.
+
+---
+
+<center>
+<br>
+<i>✦ Custom Profile Code & Lore for **S.S.** ✦</i>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </center>
