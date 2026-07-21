@@ -53,6 +53,68 @@
       margin: 25px 0; 
     }
 
+    /* ZITAT GENERATOR SEKTION */
+    .quote-generator-box {
+      background: rgba(20, 10, 10, 0.8);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      margin: 20px 0 25px 0;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .quote-gen-title {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: #d4af37;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .quote-display {
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      color: #fce7a2;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
+      padding: 0 10px;
+    }
+
+    .quote-gen-author {
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      color: #b32d2d;
+      margin-top: 8px;
+      font-weight: bold;
+    }
+
+    .quote-btn {
+      background: linear-gradient(135deg, #420808, #1a0303);
+      border: 1px solid #d4af37;
+      color: #fce7a2;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.6);
+    }
+
+    .quote-btn:hover {
+      background: #d4af37;
+      color: #060404;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+    }
+
     /* EDLES HOLZREGAL CONTAINER */
     .shelf-wrapper {
       position: relative;
@@ -74,7 +136,6 @@
       overflow: hidden;
     }
 
-    /* GOLDENE REGAL-LEISTE OBEN */
     .shelf-wrapper::before {
       content: "";
       position: absolute;
@@ -176,7 +237,7 @@
       z-index: 4;
     }
 
-    /* PFEIL BUTTON ALS GOLDENES SIEGEL */
+    /* PFEIL BUTTON */
     .nav-arrow {
       position: absolute;
       right: 8px;
@@ -204,7 +265,7 @@
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
     }
 
-    /* RELATIONSHIPS MAP SEKTION UNTER DEM REGAL */
+    /* RELATIONSHIPS MAP SEKTION */
     .rel-section {
       margin-top: 50px;
       padding: 25px 20px;
@@ -322,7 +383,6 @@
       padding-bottom: 10px; margin-bottom: 15px; font-weight: 900;
     }
 
-    /* TAGEBUCH-SCHRIFT FÜR DEN INHALT */
     .book-body { 
       flex: 1; 
       overflow-y: auto; 
@@ -353,7 +413,6 @@
       border-radius: 4px; padding: 3px 10px; cursor: pointer;
     }
 
-    /* DUNKLES ZITAT */
     .quote-box {
       font-family: 'Caveat', cursive;
       font-size: 24px;
@@ -382,6 +441,13 @@
     <h2>✦ Archive of the Eternal ✦</h2>
 
     <hr>
+
+    <div class="quote-generator-box">
+      <div class="quote-gen-title">✦ ZITAT DES TAGES ✦</div>
+      <div class="quote-display" id="randomQuoteText">»Die Dunkelheit war mein einziger Zufluchtsort, bis deine Stimme das Schweigen brach.«</div>
+      <div class="quote-gen-author" id="randomQuoteAuthor">— Ethyalexia</div>
+      <button class="quote-btn" onclick="generateRandomQuote()">✨ Neues Zitat enthüllen</button>
+    </div>
 
     <div class="shelf-wrapper">
       <div class="nav-arrow" id="arrowBtn" onclick="slideShelf()">❯</div>
@@ -479,6 +545,20 @@
   </div>
 
   <script>
+    const quotes = [
+      { text: "»Die Dunkelheit war mein einziger Zufluchtsort, bis deine Stimme das Schweigen brach. Ich habe gelernt zu überleben, aber erst an deiner Seite habe ich gelernt, was es bedeutet, zu leben.«", author: "— Ethyalexia" },
+      { text: "»Ich habe mein ganzes Leben damit verbracht, stark genug zu werden, um niemanden mehr zu verlieren. Bei dir habe ich erkannt, dass Stärke nicht bedeutet, die Welt zu beherrschen – sondern demjenigen einen Zufluchtsort zu bieten, den man liebt.«", author: "— Cyrus" },
+      { text: "»Verbindung entsteht nicht dort, wo keine Narben sind, sondern dort, wo jemand sie sieht und trotzdem bleibt.«", author: "— Ethyalexia" },
+      { text: "»Manchmal koche ich nur, um den Raum mit Wärme zu füllen... damit du vergisst, wie kalt deine Welt einmal war.«", author: "— Cyrus" },
+      { text: "»Wer die Ewigkeit fürchtet, hat noch nie jemanden gefunden, mit dem sich ein einziger Moment wie ein ganzes Leben anfühlt.«", author: "— Ethyalexia" }
+    ];
+
+    function generateRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      document.getElementById('randomQuoteText').innerText = quotes[randomIndex].text;
+      document.getElementById('randomQuoteAuthor').innerText = quotes[randomIndex].author;
+    }
+
     const alexPages = [
       "<b>1. Daten & Aussehen:</b><br>✦ <b>Name:</b> Ethyalexia Eztliquies (Alex)<br>✦ <b>Alter:</b> 44 Jahre • 21. Dezember<br>✦ <b>Größe:</b> 1,90 m<br><br><b>Erscheinung:</b> Extrem helle Haut, markante rote Augen und langes weißes Haar. Seine stattliche Größe verleiht ihm eine imposante, unnahbare Ausstrahlung.<br><br><b>Kleidung & Merkmale:</b> Elegante, tiefschwarze Garderobe mit langem Mantel und Handschuhen. Bekannt als 'der langhaarige weiße Vampir'. Trägt Ciros Ehering von unschätzbarem Wert.",
 
