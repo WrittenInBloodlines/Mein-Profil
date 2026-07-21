@@ -9,66 +9,125 @@
 
     * { box-sizing: border-box; }
 
+    /* CANVAS FÜR PARTIKEL BACKGROUND */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* THEME VARIABLEN (STANDARD: NACHT-MODUS) */
+    :root {
+      --bg-color: #060404;
+      --bg-gradient: radial-gradient(circle at 50% 30%, rgba(180, 20, 20, 0.2), transparent 60%),
+                     radial-gradient(circle at 50% 85%, rgba(212, 175, 55, 0.12), transparent 65%);
+      --text-color: #e3d5ca;
+      --title-color: #d4af37;
+      --subtitle-color: #b32d2d;
+      --box-bg: rgba(20, 10, 10, 0.8);
+      --box-border: rgba(212, 175, 55, 0.4);
+      --hr-gradient: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
+    }
+
+    /* CIRO'S TAG-MODUS (HELL) */
+    body.light-mode {
+      --bg-color: #f4efe6;
+      --bg-gradient: radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.25), transparent 60%),
+                     radial-gradient(circle at 50% 85%, rgba(139, 90, 43, 0.15), transparent 65%);
+      --text-color: #2b1a1a;
+      --title-color: #6e1a1a;
+      --subtitle-color: #8c581e;
+      --box-bg: rgba(255, 250, 242, 0.85);
+      --box-border: rgba(140, 88, 30, 0.5);
+      --hr-gradient: linear-gradient(90deg, transparent, rgba(140, 88, 30, 0.8), transparent);
+    }
+
     body {
-      background-color: #060404;
-      background-image: 
-        radial-gradient(circle at 50% 30%, rgba(180, 20, 20, 0.2), transparent 60%),
-        radial-gradient(circle at 50% 85%, rgba(212, 175, 55, 0.12), transparent 65%);
-      color: #e3d5ca;
+      background-color: var(--bg-color);
+      background-image: var(--bg-gradient);
+      color: var(--text-color);
       font-family: 'Outfit', sans-serif;
       line-height: 1.6;
       margin: 0;
       padding: 15px;
       overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
-    .container { max-width: 820px; margin: 0 auto; }
+    .container { max-width: 820px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* THEME TOGGLE BUTTON OBEN RECHTS */
+    .theme-toggle-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--box-bg);
+      border: 1px solid var(--box-border);
+      color: var(--title-color);
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 100;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: scale(1.05);
+      border-color: var(--title-color);
+    }
 
     h1 {
       font-family: 'Cinzel', serif;
       font-size: 40px;
       font-weight: 900;
       text-align: center;
-      color: #d4af37;
+      color: var(--title-color);
       letter-spacing: 6px;
       margin-top: 15px;
-      text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 35px rgba(139, 0, 0, 0.6);
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 16px;
       font-style: italic;
-      color: #b32d2d;
+      color: var(--subtitle-color);
       text-align: center;
       margin-bottom: 25px;
       letter-spacing: 3px;
-      text-shadow: 0 0 8px rgba(179, 45, 45, 0.4);
     }
 
     hr { 
       border: 0; 
       height: 2px; 
-      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent); 
+      background: var(--hr-gradient); 
       margin: 25px 0; 
     }
 
     /* ZITAT GENERATOR SEKTION */
     .quote-generator-box {
-      background: rgba(20, 10, 10, 0.8);
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: var(--box-bg);
+      border: 1px solid var(--box-border);
       border-radius: 10px;
       padding: 20px;
       text-align: center;
       margin: 20px 0 25px 0;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
       position: relative;
     }
 
     .quote-gen-title {
       font-family: 'Cinzel', serif;
       font-size: 14px;
-      color: #d4af37;
+      color: var(--title-color);
       letter-spacing: 2px;
       margin-bottom: 10px;
     }
@@ -76,7 +135,7 @@
     .quote-display {
       font-family: 'Caveat', cursive;
       font-size: 22px;
-      color: #fce7a2;
+      color: var(--text-color);
       min-height: 60px;
       display: flex;
       align-items: center;
@@ -88,7 +147,7 @@
     .quote-gen-author {
       font-family: 'Cinzel', serif;
       font-size: 12px;
-      color: #b32d2d;
+      color: var(--subtitle-color);
       margin-top: 8px;
       font-weight: bold;
     }
@@ -269,16 +328,16 @@
     .rel-section {
       margin-top: 50px;
       padding: 25px 20px;
-      background: rgba(15, 10, 10, 0.85);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: var(--box-bg);
+      border: 1px solid var(--box-border);
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .rel-title {
       font-family: 'Cinzel', serif;
       font-size: 24px;
-      color: #d4af37;
+      color: var(--title-color);
       text-align: center;
       margin-bottom: 5px;
       letter-spacing: 2px;
@@ -288,7 +347,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 13px;
-      color: #b32d2d;
+      color: var(--subtitle-color);
       text-align: center;
       margin-bottom: 30px;
     }
@@ -303,11 +362,15 @@
     .rel-card {
       width: 100%;
       max-width: 600px;
-      background: rgba(30, 15, 15, 0.9);
+      background: rgba(30, 15, 15, 0.7);
       border-left: 4px solid #d4af37;
       border-radius: 6px;
       padding: 15px 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    body.light-mode .rel-card {
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .rel-card.alex-card { border-left-color: #a82828; }
@@ -317,7 +380,7 @@
       font-family: 'Cinzel', serif;
       font-size: 18px;
       font-weight: 700;
-      color: #fce7a2;
+      color: var(--title-color);
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
@@ -330,7 +393,7 @@
       padding: 2px 8px;
       border-radius: 4px;
       background: rgba(212, 175, 55, 0.2);
-      color: #d4af37;
+      color: var(--title-color);
       border: 1px solid rgba(212, 175, 55, 0.4);
     }
 
@@ -343,11 +406,11 @@
     .rel-list li {
       margin-bottom: 8px;
       font-size: 14px;
-      color: #e3d5ca;
+      color: var(--text-color);
     }
 
     .rel-list b {
-      color: #d4af37;
+      color: var(--title-color);
     }
 
     .rel-line {
@@ -361,16 +424,16 @@
     .artwork-section {
       margin-top: 50px;
       padding: 25px 15px;
-      background: rgba(12, 8, 8, 0.9);
-      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: var(--box-bg);
+      border: 1px solid var(--box-border);
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
     .artwork-title {
       font-family: 'Cinzel', serif;
       font-size: 22px;
-      color: #d4af37;
+      color: var(--title-color);
       text-align: center;
       letter-spacing: 3px;
       margin-bottom: 4px;
@@ -380,7 +443,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 12px;
-      color: #b32d2d;
+      color: var(--subtitle-color);
       text-align: center;
       margin-bottom: 25px;
     }
@@ -394,7 +457,7 @@
     .artwork-card {
       position: relative;
       width: 100%;
-      padding-top: 130%; /* Hochformat Verhältnis */
+      padding-top: 130%;
       background: #1a0f0f;
       border: 2px solid #570b0b;
       border-radius: 8px;
@@ -422,7 +485,7 @@
       opacity: 0;
     }
 
-    /* FULLSCREEN LIGHTBOX BILD ANSEHEN */
+    /* LIGHTBOX VOLLBILD BILD ANSEHEN */
     .lightbox-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0, 0, 0, 0.95);
@@ -524,7 +587,11 @@
 </head>
 <body>
 
+  <canvas id="particle-canvas"></canvas>
+
   <div class="container">
+    <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">☀️ Ciros Tag-Modus</button>
+
     <h1>S.S.</h1>
     <h2>✦ Archive of the Eternal ✦</h2>
 
@@ -655,17 +722,92 @@
 
   <script>
     /* ========================================================
+       TAG / NACHT MODUS SWITCH
+       ======================================================== */
+    function toggleTheme() {
+      const body = document.body;
+      const btn = document.getElementById('themeBtn');
+      
+      body.classList.toggle('light-mode');
+      
+      if (body.classList.contains('light-mode')) {
+        btn.innerText = '🌙 Alex\' Nacht-Modus';
+      } else {
+        btn.innerText = '☀️ Ciros Tag-Modus';
+      }
+    }
+
+    /* ========================================================
+       PARTIKEL EFFEKT BACKGROUND
+       ======================================================== */
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 20;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speedY = Math.random() * 0.8 + 0.2;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.opacity = Math.random() * 0.7 + 0.3;
+        // Entweder Gold oder Blutrot
+        this.color = Math.random() > 0.5 ? '212, 175, 55' : '180, 20, 20';
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < -10) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 45; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    initParticles();
+    animateParticles();
+
+    /* ========================================================
        ARTWORK-LISTE (HIER DEINE 73 BILDER/LINKS EINFÜGEN)
        ======================================================== */
     const artworkList = [
-      "https://i.postimg.cc/m2ftm6nx/file-0000000035b471fd9064f9aa0cf3b33b.jpg",
-      "https://i.postimg.cc/gkVrQH9B/file-00000000959471fdbe6c08ef1db31a8b.jpg",
+      "https://via.placeholder.com/300x400/2b0a0a/d4af37?text=Artwork+1",
+      "https://via.placeholder.com/300x400/0a2b1a/d4af37?text=Artwork+2",
       "https://via.placeholder.com/300x400/1a0a2b/d4af37?text=Artwork+3",
       "https://via.placeholder.com/300x400/3a2b0a/d4af37?text=Artwork+4",
       "https://via.placeholder.com/300x400/0a3a3a/d4af37?text=Artwork+5",
       "https://via.placeholder.com/300x400/3a0a3a/d4af37?text=Artwork+6",
       "https://via.placeholder.com/300x400/1c1c1c/d4af37?text=Artwork+7"
-      /* Du kannst hier beliebig viele Bild-URLs kommagetrennt hinzufügen! */
     ];
 
     let currentArtIndices = [0, 1, 2];
@@ -682,7 +824,6 @@
       }, 800);
     }
 
-    // Alle 5 Sekunden: Ein einzelnes Bild austauschen
     function start5sRotation() {
       timer5s = setInterval(() => {
         let availableIndices = artworkList.map((_, i) => i).filter(i => !currentArtIndices.includes(i));
@@ -695,10 +836,8 @@
       }, 5000);
     }
 
-    // Alle 15 Sekunden: Alle 3 Bilder gleichzeitig austauschen
     function start15sRotation() {
       timer15s = setInterval(() => {
-        // Stoppe kurz die 5s-Schleife während alle 3 wechseln
         clearInterval(timer5s);
 
         let shuffled = artworkList.map((_, i) => i).sort(() => 0.5 - Math.random());
@@ -708,16 +847,13 @@
           }
         }
 
-        // Starte den 5s-Timer danach wieder neu
         start5sRotation();
       }, 15000);
     }
 
-    // Galerie-Timer starten
     start5sRotation();
     start15sRotation();
 
-    // Lightbox öffnen
     function openLightbox(slotIndex) {
       const src = document.getElementById(`artImg${slotIndex}`).src;
       document.getElementById('lightboxImage').src = src;
