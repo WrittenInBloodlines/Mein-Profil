@@ -98,7 +98,7 @@
       padding: 0 5px;
     }
 
-    /* BÜCHER - DESIGN OHNE DIE STREIFEN OBEN/UNTEN */
+    /* BÜCHER - DESIGN */
     .book-spine {
       flex: 0 0 22%;
       height: 325px;
@@ -121,7 +121,6 @@
       box-shadow: -12px 15px 25px rgba(212, 175, 55, 0.45);
     }
 
-    /* OBERES ORNAMENT SANFT PLATZIERT */
     .book-spine::before {
       content: "✦ ⚜ ✦";
       position: absolute;
@@ -133,7 +132,6 @@
       z-index: 2;
     }
 
-    /* ORNAMENTE & RAHMEN */
     .book-spine::after {
       content: "";
       position: absolute;
@@ -204,6 +202,98 @@
       background: #d4af37; 
       color: #0a0707; 
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+    }
+
+    /* RELATIONSHIPS MAP SEKTION UNTER DEM REGAL */
+    .rel-section {
+      margin-top: 50px;
+      padding: 25px 20px;
+      background: rgba(15, 10, 10, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+    }
+
+    .rel-title {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      color: #d4af37;
+      text-align: center;
+      margin-bottom: 5px;
+      letter-spacing: 2px;
+    }
+
+    .rel-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: #b32d2d;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .rel-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .rel-card {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(30, 15, 15, 0.9);
+      border-left: 4px solid #d4af37;
+      border-radius: 6px;
+      padding: 15px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .rel-card.alex-card { border-left-color: #a82828; }
+    .rel-card.ciro-card { border-left-color: #238560; }
+
+    .rel-card-header {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fce7a2;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .rel-tag {
+      font-size: 11px;
+      font-family: 'Outfit', sans-serif;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(212, 175, 55, 0.2);
+      color: #d4af37;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+
+    .rel-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .rel-list li {
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #e3d5ca;
+    }
+
+    .rel-list b {
+      color: #d4af37;
+    }
+
+    .rel-line {
+      text-align: center;
+      color: #8b0000;
+      font-size: 20px;
+      margin: -10px 0;
     }
 
     /* POPUP & BUCH ÖFFNEN */
@@ -334,6 +424,41 @@
             <div class="spine-ss" style="color: #ffffff;">S.S.</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="rel-section">
+      <div class="rel-title">✦ Character Relationships ✦</div>
+      <div class="rel-subtitle">Die Verbindungen & Schicksale im Archiv</div>
+
+      <div class="rel-container">
+        
+        <div class="rel-card alex-card">
+          <div class="rel-card-header">
+            <span>Ethyalexia (Alex)</span>
+            <span class="rel-tag">Vampir</span>
+          </div>
+          <ul class="rel-list">
+            <li>✦ <b>Ciro D’Amantino:</b> Ehemann, seelischer Anker & größte Liebe. Der Einzige, der Alex' Mauern durchbrochen hat.</li>
+            <li>✦ <b>Der Erschaffer (Vampir):</b> Schöpfer & heimlicher Beobachter aus dem Hintergrund. Verfolgt Alex' Entwicklung mit Ciro.</li>
+            <li>✦ <b>Eltern:</b> Vollständiger Kontaktabbruch nach liebloser Kindheit.</li>
+          </ul>
+        </div>
+
+        <div class="rel-line">❖ 🖤 ❖</div>
+
+        <div class="rel-card ciro-card">
+          <div class="rel-card-header">
+            <span>Cyrus (Ciro)</span>
+            <span class="rel-tag">Mensch / Geschäftsmann</span>
+          </div>
+          <ul class="rel-list">
+            <li>✦ <b>Alex Eztliquies:</b> Ehemann, Schutzbedürfnis & sicherer Zufluchtsort vor seiner Verlustangst.</li>
+            <li>✦ <b>Xavier D’Amantino:</b> Verstorbener älterer Bruder. Tragischer Verlust, der Ciros Schutzinstinkt bis heute prägt.</li>
+            <li>✦ <b>Der Erschaffer:</b> Unbewusste Gefahr im Schatten, durch die Ciro sich in Alex' Nähe manchmal beobachtet fühlt.</li>
+          </ul>
+        </div>
+
       </div>
     </div>
 
