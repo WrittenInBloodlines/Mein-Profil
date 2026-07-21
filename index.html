@@ -183,9 +183,9 @@
     .modal-overlay.active { display: flex; opacity: 1; }
 
     .interactive-book {
-      width: 92%; max-width: 520px; height: 82vh;
+      width: 92%; max-width: 540px; height: 84vh;
       background: #bd9b70;
-      background-image: radial-gradient(ellipse at center, rgba(240, 220, 185, 0.35) 0%, rgba(135, 95, 55, 0.5) 75%);
+      background-image: radial-gradient(ellipse at center, rgba(240, 220, 185, 0.4) 0%, rgba(135, 95, 55, 0.6) 75%);
       border: 3px solid #420808; border-radius: 8px 14px 14px 8px;
       padding: 25px 20px 50px 20px; box-sizing: border-box;
       position: relative; display: flex; flex-direction: column;
@@ -197,7 +197,7 @@
       padding-bottom: 10px; margin-bottom: 15px; font-weight: 900;
     }
 
-    .book-body { flex: 1; overflow-y: auto; color: #1a0a03; font-family: 'Playfair Display', serif; font-size: 15px; }
+    .book-body { flex: 1; overflow-y: auto; color: #1a0a03; font-family: 'Playfair Display', serif; font-size: 15px; line-height: 1.6; }
 
     .book-controls {
       display: flex; justify-content: space-between; align-items: center;
@@ -290,25 +290,55 @@
 
   <script>
     const alexPages = [
-      "<b>1. Profil & Erscheinung:</b><br>✦ Alter: 44 Jahre • 21. Dezember<br>✦ Größe: 1.90 m<br>✦ Merkmale: Blasse Haut, rote Augen, langes weißes Haar.",
-      "<b>2. Psychologie & Trauma:</b><br>Aufgewachsen in kühler Familie. Mit 21 Jahren von einem Vampir verwandelt.",
-      "<b>3. Fähigkeiten:</b><br>Übernatürliche Geschwindigkeit, lautloses Bewegen.",
-      "<b>4. Alltag:</b><br>Nachtaktiv. Zeichnet, liest und spielt Klavier.",
-      "<b>5. Geheimnisse:</b><br>Leere Seite...", "<b>6. Zeitleiste:</b><br>Leere Seite...",
-      "<b>7. Beziehungen:</b><br>Leere Seite...", "<b>8. Erschaffer:</b><br>Leere Seite...",
-      "<b>9. Besitztümer:</b><br>Leere Seite...", "<b>10. Kunst:</b><br>Leere Seite...",
-      "<b>11. Chroniken:</b><br>Leere Seite...", "<b>12. Ende:</b><br>Leere Seite..."
+      "<b>1. Daten & Aussehen:</b><br>✦ <b>Name:</b> Ethyalexia Eztliquies (Alex)<br>✦ <b>Alter:</b> 44 Jahre • 21. Dezember<br>✦ <b>Größe:</b> 1,90 m<br><br><b>Erscheinung:</b> Extrem helle Haut, markante rote Augen und langes weißes Haar. Seine stattliche Größe verleiht ihm eine imposante, unnahbare Ausstrahlung.<br><br><b>Kleidung & Merkmale:</b> Elegante, tiefschwarze Garderobe mit langem Mantel und Handschuhen. Bekannt als 'der langhaarige weiße Vampir'. Trägt Ciros Ehering von unschätzbarem Wert.",
+
+      "<b>2. Kindheitstrauma:</b><br>Alex wuchs in einer wohlhabenden, aber emotional völlig unterkühlten Familie auf. Seine Eltern ließen ihn von Geburt an spüren, dass er eine Enttäuschung war – ihr Wunsch war eine Tochter gewesen.<br><br>Diese lieblose Erziehung zwang ihn früh zur emotionalen Unabhängigkeit. Die Konsequenz war radikal: Alex brach den Kontakt zu seinen Eltern komplett ab.",
+
+      "<b>3. Die Verwandlung:</b><br>Mit 21 Jahren erreichte die Einsamkeit ihren Höhepunkt. Doch bevor er aufgeben konnte, begegnete er einem Vampir, der ihn fasziniert beobachtet hatte.<br><br>Der Vampir sah in Alex ungewöhnliche innere Stärke und verwandelte ihn als eine Art Experiment. Unbewusst rettete er Alex dadurch das Leben, stellte ihn aber vor eine völlig neue, düstere Natur.",
+
+      "<b>4. Schutzhaltung & Isolierung:</b><br>Die Transformation brachte die Bürde der Unsterblichkeit und des ständigen Hungers mit sich. Aus seinem Trauma resultiert eine extreme Distanz gegenüber Fremden.<br><br>Er instrumentalisiert seinen bedrohlichen Ruf gezielt, um Menschen auf Abstand zu halten. Seine Loyalität verschenkt er nur an jene, die ihn bedingungslos akzeptieren.",
+
+      "<b>5. Der Beobachter:</b><br>Der Vampir, der Alex erschuf, beobachtet ihn bis heute aus der Distanz.<br><br>Besonders seit Alex Ciro kennengelernt hat, zeigt sein Erschaffer erneut Interesse, da Ciro eine unerwartete Veränderung in Alex bewirkt. Dadurch fühlt sich Ciro in Alex' Nähe manchmal beobachtet – ohne zu ahnen, wie wahr dieser Verdacht ist.",
+
+      "<b>6. Übernatürliche Fähigkeiten:</b><br>✦ <b>Physische Perfektion:</b> Übermenschliche Geschwindigkeit und absolut lautlose Bewegungen.<br><br>✦ <b>Hyper-Sensorik:</b> Hört den Herzschlag anderer und nimmt kleinste Nuancen der Umgebung wahr.<br><br>✦ <b>Präsenzkontrolle:</b> Kann seine Aura dämpfen, um wie ein gewöhnlicher Mensch zu wirken.",
+
+      "<b>7. Die biologische Kehrseite:</b><br>Sein Überleben und seine Regeneration sind an den Konsum von Blut oder Fleisch gebunden. Dieser Zwang zerreißt ihn innerlich und widerspricht seiner Moral.<br><br>Da ein Verzicht seinen Tod bedeuten würde, führt er täglich einen disziplinierten Kampf um den Erhalt seiner verbliebenen Menschlichkeit.",
+
+      "<b>8. Alltag & Leidenschaften:</b><br>Da er das Tageslicht meidet, erwacht Alex' Welt in der Dunkelheit. In der Stille der Nacht zeichnet, liest und reflektiert er.<br><br>Seine große Leidenschaft ist die Kunst und die klassische Musik (Klavier und Violine). Er spielt selbst meisterhaft Violine, verbirgt dieses Talent jedoch vor der Welt.",
+
+      "<b>9. Das verbindende Ritual:</b><br>Obwohl Alex menschliche Nahrung biologisch nicht verwerten kann, kocht Ciro regelmäßig für ihn.<br><br>Alex schätzt dieses symbolische Ritual zutiefst: Es spendet beiden ein Gefühl von Normalität, Geborgenheit und einem echten Zuhause.",
+
+      "<b>10. Beziehungsdynamik:</b><br>Ciro verliebte sich zuerst – fasziniert vom Kontrast aus Alex' Gefahr und seiner inneren Ruhe. Alex brauchte lange, um seine Verteidigungsmauern abzubauen.<br><br>Der Wendepunkt geschah auf einer einfachen Bank, als Alex Ciro vorsichtig küsste und Ciro entschlossen erwiderte. Es besiegelte ihr gemeinsames Schicksal.",
+
+      "<b>11. Das Band der Ehe:</b><br>Heute führen sie eine Ehe voller Vertrauen. Ciro ist Alex' exklusiver Anker, bei dem er seine Maske fallen lassen kann.<br><br>Ciros Wärme gibt Alex die bedingungslose Akzeptanz, die seine Eltern ihm verwehrten, während Alex' Unsterblichkeit Ciro die Furcht vor dem Verlassenwerden nimmt.",
+
+      "<b>12. Zitat von Alex:</b><br><br><blockquote style='font-style: italic; color: #8b0000; border-left: 2px solid #d4af37; padding-left: 10px; margin-top: 20px;'>»Die Dunkelheit war mein einziger Zufluchtsort, bis deine Stimme das Schweigen brach. Ich habe gelernt zu überleben, aber erst an deiner Seite habe ich gelernt, was es bedeutet, zu leben.«</blockquote><br><div style='text-align: right; color: #d4af37;'>— Ethyalexia</div>"
     ];
 
     const ciroPages = [
-      "<b>1. Profil & Erscheinung:</b><br>✦ Alter: 47 Jahre • 12. Juli<br>✦ Größe: 1.82 m<br>✦ Merkmale: Schwarze Locken, braune Augen, Schnurrbart.",
-      "<b>2. Trauma:</b><br>Verlor mit 15 seinen Bruder Xavier an die Mafia.",
-      "<b>3. Fähigkeiten:</b><br>Nahkampf-Experte, taktischer Verstand.",
-      "<b>4. Alltag:</b><br>Erfolgreicher Geschäftsmann, kocht gerne.",
-      "<b>5. Geheimnisse:</b><br>Leere Seite...", "<b>6. Zeitleiste:</b><br>Leere Seite...",
-      "<b>7. Beziehungen:</b><br>Leere Seite...", "<b>8. Erschaffer:</b><br>Leere Seite...",
-      "<b>9. Besitztümer:</b><br>Leere Seite...", "<b>10. Kunst:</b><br>Leere Seite...",
-      "<b>11. Chroniken:</b><br>Leere Seite...", "<b>12. Ende:</b><br>Leere Seite..."
+      "<b>1. Daten & Aussehen:</b><br>✦ <b>Name:</b> Cyrus D’Amantino (Ciro)<br>✦ <b>Alter:</b> 47 Jahre • 12. Juli<br>✦ <b>Größe:</b> 1,82 m<br><br><b>Erscheinung:</b> Schulterlanges, schwarzes Lockenhaar, warme braune Augen, gemischte Hautfarbe und ein gepflegter schwarzer Schnurrbart.<br><br><b>Kleidung & Merkmale:</b> Elegante Kleidung in Schwarz-Weiß (Licht & Schatten). Trägt den weißen Ohrstecker seines verstorbenen Bruders Xavier und Alex' Ehering.",
+
+      "<b>2. Das Kindheitstrauma:</b><br>Mit 15 Jahren wurde Ciros älterer Bruder Xavier von der Mafia entführt. Trotz harten Trainings und eines verzweifelten Rettungsversuchs kam Ciro zu spät – Xavier war bereits hingerichtet worden.<br><br>Dieses Scheitern verankerte in Ciro eine tiefe Verlustangst und ein extremes Verantwortungsgefühl.",
+
+      "<b>3. Die Erinnerung an Xavier:</b><br>Vor dem Unglück waren die Brüder unzertrennlich. Xavier war der ruhige Gegenpol zum lebhaften, verspielten Ciro.<br><br>Ciro gab sich jahrelang selbst die Schuld. In ihm blieb die ständige Angst zurück, erneut jemanden zu verlieren, weil er nicht stark oder schnell genug war.",
+
+      "<b>4. Der Weg zur Macht:</b><br>Um nie wieder machtlos zu sein, baute Ciro seine Fähigkeiten aus, lernte Strategie und behauptete sich in gefährlichen Strukturen.<br><br>Sein späterer Erfolg als Geschäftsmann entsprang dem tiefen Bedürfnis, die Menschen zu beschützen, die ihm wichtig sind.",
+
+      "<b>5. Die Maske des Charmes:</b><br>Um seine Wunden zu verbergen, zeigt er nach außen eine charmante, verspielte und manchmal naive Fassade. Dieser Humor ist sein Schutzschild.<br><br>In Wahrheit liest er Menschen sekundenschnell und schaltet bei Gefahr sofort in einen hochfokussierten, todernsten Modus.",
+
+      "<b>6. Fähigkeiten & Verstand:</b><br>✦ <b>Nahkampf-Meister:</b> Durch jahrelanges Training im Untergrund ist er ein hocheffizienter Kämpfer.<br><br>✦ <b>Analytisches Genie:</b> Seine größte Waffe ist sein Verstand. Er denkt mehrere Schritte voraus und besitzt ein brillantes psychologisches Gespür.",
+
+      "<b>7. Alltag & Vorlieben:</b><br>Ciro führt als Geschäftsmann ein strukturiertes Tagleben. Als Ausgleich liebt er Tiere, zeigt große Affinität zu Kindern und findet Entspannung in Musik.<br><br>Er gleicht Alex' nachtaktiven Rhythmus perfekt aus und bringt Wärme in ihren gemeinsamen Alltag.",
+
+      "<b>8. Die Leidenschaft fürs Kochen:</b><br>Ciro kocht leidenschaftlich gerne. Für ihn ist das Zubereiten von Mahlzeiten der ultimative Liebesbeweis.<br><br>Auch wenn Alex die Nahrung biologisch nicht braucht, kocht Ciro regelmäßig für ihn, um ihnen ein Gefühl von Geborgenheit zu schenken.",
+
+      "<b>9. Die Anziehung zu Alex:</b><br>Ciro verliebte sich zuerst – fasziniert von der gefährlichen Aura des Vampirs und der tiefen Stille in seinem Inneren.<br><br>Er spürte Alex' Schmerz und beschloss geduldig, die dicken Mauern um Alex' Herz Stein für Stein abzutragen.",
+
+      "<b>10. Der Wendepunkt:</b><br>Auf einer Bank gestand Alex ihm stumm seine Gefühle mit einem ersten, vorsichtigen Kuss.<br><br>Ciros anfänglicher Schock wandelte sich in einen tiefen, entschlossenen Gegenkuss, der ihre Seelen für immer miteinander verband.",
+
+      "<b>11. Heilung durch die Ehe:</b><br>In ihrer Ehe heilen sie gegenseitig ihre Wunden. Ciro schenkt Alex Wärme und bedingungslose Akzeptanz.<br><br>Durch Alex' Stärke und Unsterblichkeit lernt Ciro wiederum, dass wahre Liebe nicht bedeutet, aus Angst zu klammern, sondern in Freiheit zu vertrauen.",
+
+      "<b>12. Zitat von Ciro:</b><br><br><blockquote style='font-style: italic; color: #124733; border-left: 2px solid #d4af37; padding-left: 10px; margin-top: 20px;'>»Ich habe mein ganzes Leben damit verbracht, stark genug zu werden, um niemanden mehr zu verlieren. Bei dir habe ich erkannt, dass Stärke nicht bedeutet, die Welt zu beherrschen – sondern demjenigen einen Zufluchtsort zu bieten, den man liebt.«</blockquote><br><div style='text-align: right; color: #d4af37;'>— Cyrus</div>"
     ];
 
     const emptyPages = Array(12).fill("Diese Seite ist noch leer.");
