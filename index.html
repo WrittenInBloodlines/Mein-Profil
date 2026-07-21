@@ -7,6 +7,8 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@600;700;900&family=Outfit:wght@300;400;500&display=swap');
 
+    * { box-sizing: border-box; }
+
     body {
       background-color: #0a0707;
       background-image: 
@@ -16,138 +18,206 @@
       font-family: 'Outfit', sans-serif;
       line-height: 1.6;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
       overflow-x: hidden;
     }
 
-    .container { max-width: 900px; margin: 0 auto; }
+    .container { max-width: 800px; margin: 0 auto; }
 
     h1 {
       font-family: 'Cinzel', serif;
-      font-size: 38px;
+      font-size: 36px;
       font-weight: 700;
       text-align: center;
       color: #d4af37;
-      letter-spacing: 5px;
-      margin-top: 20px;
+      letter-spacing: 4px;
+      margin-top: 15px;
       text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
     }
 
     h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 18px;
+      font-size: 16px;
       font-style: italic;
       color: #8b0000;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       letter-spacing: 2px;
     }
 
-    hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent); margin: 30px 0; }
+    hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent); margin: 25px 0; }
 
-    /* BÜCHERREGAL SYSTEM */
+    /* REGAL CONTAINER */
     .shelf-wrapper {
       position: relative;
       background-color: #5c3519;
       background-image: repeating-linear-gradient(90deg, #825028 0px, #5c3519 20px, #945d31 40px, #4f2c13 65px, #7d4b24 85px, #5c3519 100px);
-      padding: 40px 10px 0px 10px;
+      padding: 30px 40px 0px 10px;
       border-top: 8px solid #4a2913;
-      border-bottom: 24px solid #42230e;
+      border-left: 5px solid #331a0a;
+      border-right: 5px solid #331a0a;
+      border-bottom: 20px solid #42230e;
       border-radius: 6px;
       box-shadow: inset 0 25px 35px rgba(0, 0, 0, 0.8), 0 20px 35px rgba(0, 0, 0, 0.95);
-      margin-top: 25px;
+      margin-top: 20px;
       overflow: hidden;
     }
 
-    .books-container {
+    .books-slider {
       display: flex;
-      gap: 15px;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      width: 200%; /* Platz für zwei Sets */
+      width: 200%;
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    .shelf-set {
+    .shelf-page {
       display: flex;
-      justify-content: space-around;
       width: 50%;
-      padding: 0 20px;
-      box-sizing: border-box;
+      justify-content: space-evenly;
+      align-items: flex-end;
+      padding: 0 5px;
     }
 
-    /* NAVIGATION PFEIL */
-    .shelf-nav {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 40px;
-      color: #d4af37;
-      cursor: pointer;
-      z-index: 10;
-      text-shadow: 0 0 10px #000;
-      transition: all 0.3s;
-    }
-    .shelf-nav:hover { scale: 1.2; color: #fff; }
-
-    /* BUCHRÜCKEN STYLES */
+    /* BÜCHER - EXAKT GLEICH GROSS & SYMMETRISCH */
     .book-spine {
-      width: 100px;
+      flex: 0 0 22%;
       height: 320px;
-      border-radius: 4px 10px 10px 4px;
+      border-radius: 6px 10px 10px 6px;
       position: relative;
       cursor: pointer;
-      box-shadow: -10px 5px 15px rgba(0, 0, 0, 0.8), inset 5px 0 10px rgba(255, 255, 255, 0.15);
-      transition: all 0.3s ease;
+      box-shadow: -8px 6px 14px rgba(0, 0, 0, 0.85), inset 6px 0 10px rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
     }
 
-    .book-spine:hover { transform: translateY(-15px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+    .book-spine:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: -10px 12px 20px rgba(212, 175, 55, 0.35);
+    }
 
-    /* FARBEN */
-    .alex { background: linear-gradient(90deg, #180303, #5d1212, #1c0404); border-color: #942424; }
-    .ciro { background: linear-gradient(90deg, #030f0a, #124733, #04120c); border-color: #207354; }
-    .blue { background: linear-gradient(90deg, #020a1a, #122c5d, #040c1c); border-color: #244694; }
-    .purple { background: linear-gradient(90deg, #12021a, #3f125d, #0e041c); border-color: #652494; }
-    .pink { background: linear-gradient(90deg, #1a020f, #5d123b, #1c0412); border-color: #94245d; }
-    .orange { background: linear-gradient(90deg, #1a0b02, #5d3412, #1c0f04); border-color: #945324; }
-    .brown { background: linear-gradient(90deg, #150d0a, #3b2519, #150d0a); border-color: #4a2e1d; }
-    .white { background: linear-gradient(90deg, #1a1a1a, #555, #1a1a1a); border-color: #888; }
+    /* FARB VARIANTEN */
+    .alex { background: linear-gradient(90deg, #180303 0%, #5d1212 50%, #1c0404 100%); border: 1px solid #942424; }
+    .ciro { background: linear-gradient(90deg, #030f0a 0%, #124733 50%, #04120c 100%); border: 1px solid #207354; }
+    .blue { background: linear-gradient(90deg, #020a1a 0%, #122c5d 50%, #040c1c 100%); border: 1px solid #244694; }
+    .purple { background: linear-gradient(90deg, #12021a 0%, #3f125d 50%, #0e041c 100%); border: 1px solid #652494; }
+    .pink { background: linear-gradient(90deg, #1a020f 0%, #5d123b 50%, #1c0412 100%); border: 1px solid #94245d; }
+    .orange { background: linear-gradient(90deg, #1a0b02 0%, #5d3412 50%, #1c0f04 100%); border: 1px solid #945324; }
+    .brown { background: linear-gradient(90deg, #150d0a 0%, #3b2519 50%, #150d0a 100%); border: 1px solid #5a3723; }
+    .white { background: linear-gradient(90deg, #222222 0%, #666666 50%, #222222 100%); border: 1px solid #aaaaaa; }
 
     /* ORNAMENTE */
     .book-spine::before {
-      content: "✦ ⚜ ✦"; position: absolute; top: 15px; color: #d4af37; font-size: 10px; letter-spacing: 2px;
+      content: "✦ ⚜ ✦";
+      position: absolute;
+      top: 12px;
+      color: #d4af37;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+      z-index: 2;
     }
+
     .book-spine::after {
-      content: ""; position: absolute; top: 8px; left: 6px; right: 6px; bottom: 8px; border: 1px double rgba(212, 175, 55, 0.6);
+      content: "";
+      position: absolute;
+      top: 6px; left: 5px; right: 5px; bottom: 6px;
+      border: 1px double rgba(212, 175, 55, 0.7);
+      pointer-events: none;
     }
+
     .spine-title {
-      transform: rotate(90deg); color: #fce7a2; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700; white-space: nowrap; text-shadow: 0 1px 4px #000;
+      transform: rotate(90deg);
+      color: #fce7a2;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+      z-index: 3;
     }
-    .spine-ss { position: absolute; bottom: 15px; color: #d4af37; font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px; }
 
-    /* MODAL / BUCH ÖFFNEN */
+    .spine-ss {
+      position: absolute;
+      bottom: 12px;
+      color: #d4af37;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      z-index: 4;
+    }
+
+    /* PFEIL BUTTON */
+    .nav-arrow {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10, 7, 7, 0.75);
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      width: 28px;
+      height: 48px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 18px;
+      z-index: 20;
+      transition: all 0.2s;
+    }
+
+    .nav-arrow:hover { background: #d4af37; color: #0a0707; }
+
+    /* POPUP & BUCH ÖFFNEN */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-      backdrop-filter: blur(8px); z-index: 100; display: none; justify-content: center; align-items: center; opacity: 0; transition: 0.4s;
-    }
-    .modal-overlay.active { display: flex; opacity: 1; }
-    
-    .interactive-book {
-      width: 90%; max-width: 500px; height: 80vh; background: #bd9b70;
-      border: 3px solid #420808; border-radius: 8px 15px 15px 8px; padding: 30px;
-      box-shadow: 0 0 50px #000; display: flex; flex-direction: column; position: relative;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.88); backdrop-filter: blur(6px);
+      z-index: 9999; display: none; justify-content: center; align-items: center;
+      opacity: 0; transition: opacity 0.3s ease;
     }
 
-    .book-header { font-family: 'Cinzel', serif; font-size: 20px; color: #3b0505; text-align: center; border-bottom: 2px dashed #420808; padding-bottom: 10px; margin-bottom: 20px; font-weight: 900; }
-    .book-body { flex: 1; overflow-y: auto; color: #1a0a03; font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.6; }
-    .book-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; border-top: 1px dashed #420808; padding-top: 10px; }
-    
-    .nav-btn { background: #420808; color: #fce7a2; border: none; padding: 8px 15px; font-family: 'Cinzel', serif; cursor: pointer; border-radius: 4px; }
-    .page-indicator { color: #420808; font-weight: 700; font-family: 'Cinzel', serif; }
-    .close-btn { position: absolute; bottom: 10px; right: 20px; color: #8b0000; cursor: pointer; font-weight: 700; background: none; border: none; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+
+    .interactive-book {
+      width: 92%; max-width: 520px; height: 82vh;
+      background: #bd9b70;
+      background-image: radial-gradient(ellipse at center, rgba(240, 220, 185, 0.35) 0%, rgba(135, 95, 55, 0.5) 75%);
+      border: 3px solid #420808; border-radius: 8px 14px 14px 8px;
+      padding: 25px 20px 50px 20px; box-sizing: border-box;
+      position: relative; display: flex; flex-direction: column;
+    }
+
+    .book-header {
+      font-family: 'Cinzel', serif; font-size: 22px; color: #3b0505;
+      text-align: center; border-bottom: 2px dashed #570b0b;
+      padding-bottom: 10px; margin-bottom: 15px; font-weight: 900;
+    }
+
+    .book-body { flex: 1; overflow-y: auto; color: #1a0a03; font-family: 'Playfair Display', serif; font-size: 15px; }
+
+    .book-controls {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 15px; border-top: 1px dashed rgba(87, 11, 11, 0.4); padding-top: 10px;
+    }
+
+    .nav-btn {
+      background: #420808; color: #fce7a2; border: 1px solid #570b0b;
+      padding: 6px 14px; font-family: 'Cinzel', serif; font-size: 12px;
+      font-weight: 700; border-radius: 4px; cursor: pointer;
+    }
+
+    .page-indicator { font-family: 'Cinzel', serif; font-weight: 700; color: #420808; font-size: 13px; }
+
+    .close-modal-btn {
+      position: absolute; bottom: 12px; right: 18px;
+      font-size: 12px; font-weight: bold; color: #8b0000;
+      background: rgba(60, 10, 10, 0.15); border: 1px solid #8b0000;
+      border-radius: 4px; padding: 3px 10px; cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -155,13 +225,14 @@
   <div class="container">
     <h1>S.S.</h1>
     <h2>✦ Archive of the Eternal ✦</h2>
+
     <hr>
 
     <div class="shelf-wrapper">
-      <div class="shelf-nav" id="nextBtn" onclick="toggleShelf()">❯</div>
-      
-      <div class="books-container" id="bookshelf">
-        <div class="shelf-set">
+      <div class="nav-arrow" id="arrowBtn" onclick="slideShelf()">❯</div>
+
+      <div class="books-slider" id="slider">
+        <div class="shelf-page">
           <div class="book-spine alex" onclick="openBook('alex')">
             <div class="spine-title">Alex (Ethyalexia)</div>
             <div class="spine-ss">S.S.</div>
@@ -180,99 +251,123 @@
           </div>
         </div>
 
-        <div class="shelf-set">
+        <div class="shelf-page">
           <div class="book-spine pink" onclick="openBook('pink')">
-            <div class="spine-title">Volume III</div>
+            <div class="spine-title">Pink Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
           <div class="book-spine orange" onclick="openBook('orange')">
-            <div class="spine-title">Volume IV</div>
+            <div class="spine-title">Orange Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
           <div class="book-spine brown" onclick="openBook('brown')">
-            <div class="spine-title">Volume V</div>
+            <div class="spine-title">Brown Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
           <div class="book-spine white" onclick="openBook('white')">
-            <div class="spine-title" style="color: #333; text-shadow: none;">Volume VI</div>
-            <div class="spine-ss" style="color: #333;">S.S.</div>
+            <div class="spine-title" style="color: #ffffff;">White Archive</div>
+            <div class="spine-ss" style="color: #ffffff;">S.S.</div>
           </div>
         </div>
       </div>
     </div>
 
     <hr>
-    <blockquote style="text-align: center; border: none; background: rgba(18,10,10,0.8); padding: 20px; border-radius: 10px;">
-      <i>"In every shadow, a story waits. In every book, a soul is kept."</i><br>
-      <span style="color: #d4af37;">✦ S.S. ✦</span>
-    </blockquote>
   </div>
 
   <div class="modal-overlay" id="modal">
     <div class="interactive-book">
-      <div class="book-header" id="bookTitle">Titel</div>
+      <div class="book-header" id="bookTitle">Buch Titel</div>
       <div class="book-body" id="bookContent">Inhalt</div>
       <div class="book-controls">
-        <button class="nav-btn" onclick="changePage(-1)">❮</button>
-        <span class="page-indicator" id="pageIndicator">1 / 12</span>
-        <button class="nav-btn" onclick="changePage(1)">❯</button>
+        <button class="nav-btn" onclick="changePage(-1)">&lt; Zurück</button>
+        <span class="page-indicator" id="pageIndicator">Seite 1 / 12</span>
+        <button class="nav-btn" onclick="changePage(1)">Weiter &gt;</button>
       </div>
-      <button class="close-btn" onclick="closeBook()">✕ Schließen</button>
+      <button class="close-modal-btn" onclick="closeBook()">✕ Schließen</button>
     </div>
   </div>
 
   <script>
-    const data = {
-      alex: ["<b>1. Profil:</b> Alex...", "<b>2. Trauma:</b>...", "Seite 3", "Seite 4", "Seite 5", "Seite 6", "Seite 7", "Seite 8", "Seite 9", "Seite 10", "Seite 11", "Seite 12"],
-      ciro: ["<b>1. Profil:</b> Ciro...", "<b>2. Trauma:</b>...", "Seite 3", "Seite 4", "Seite 5", "Seite 6", "Seite 7", "Seite 8", "Seite 9", "Seite 10", "Seite 11", "Seite 12"],
-      blue: Array(12).fill("Leere Seite (Blaues Archiv)"),
-      purple: Array(12).fill("Leere Seite (Lila Archiv)"),
-      pink: Array(12).fill("Leere Seite (Band III)"),
-      orange: Array(12).fill("Leere Seite (Band IV)"),
-      brown: Array(12).fill("Leere Seite (Band V)"),
-      white: Array(12).fill("Leere Seite (Band VI)")
+    const alexPages = [
+      "<b>1. Profil & Erscheinung:</b><br>✦ Alter: 44 Jahre • 21. Dezember<br>✦ Größe: 1.90 m<br>✦ Merkmale: Blasse Haut, rote Augen, langes weißes Haar.",
+      "<b>2. Psychologie & Trauma:</b><br>Aufgewachsen in kühler Familie. Mit 21 Jahren von einem Vampir verwandelt.",
+      "<b>3. Fähigkeiten:</b><br>Übernatürliche Geschwindigkeit, lautloses Bewegen.",
+      "<b>4. Alltag:</b><br>Nachtaktiv. Zeichnet, liest und spielt Klavier.",
+      "<b>5. Geheimnisse:</b><br>Leere Seite...", "<b>6. Zeitleiste:</b><br>Leere Seite...",
+      "<b>7. Beziehungen:</b><br>Leere Seite...", "<b>8. Erschaffer:</b><br>Leere Seite...",
+      "<b>9. Besitztümer:</b><br>Leere Seite...", "<b>10. Kunst:</b><br>Leere Seite...",
+      "<b>11. Chroniken:</b><br>Leere Seite...", "<b>12. Ende:</b><br>Leere Seite..."
+    ];
+
+    const ciroPages = [
+      "<b>1. Profil & Erscheinung:</b><br>✦ Alter: 47 Jahre • 12. Juli<br>✦ Größe: 1.82 m<br>✦ Merkmale: Schwarze Locken, braune Augen, Schnurrbart.",
+      "<b>2. Trauma:</b><br>Verlor mit 15 seinen Bruder Xavier an die Mafia.",
+      "<b>3. Fähigkeiten:</b><br>Nahkampf-Experte, taktischer Verstand.",
+      "<b>4. Alltag:</b><br>Erfolgreicher Geschäftsmann, kocht gerne.",
+      "<b>5. Geheimnisse:</b><br>Leere Seite...", "<b>6. Zeitleiste:</b><br>Leere Seite...",
+      "<b>7. Beziehungen:</b><br>Leere Seite...", "<b>8. Erschaffer:</b><br>Leere Seite...",
+      "<b>9. Besitztümer:</b><br>Leere Seite...", "<b>10. Kunst:</b><br>Leere Seite...",
+      "<b>11. Chroniken:</b><br>Leere Seite...", "<b>12. Ende:</b><br>Leere Seite..."
+    ];
+
+    const emptyPages = Array(12).fill("Diese Seite ist noch leer.");
+
+    const bookData = {
+      alex: { title: "Alex (Ethyalexia)", pages: alexPages },
+      ciro: { title: "Ciro (Cyrus)", pages: ciroPages },
+      blue: { title: "Blue Archive", pages: emptyPages },
+      purple: { title: "Purple Archive", pages: emptyPages },
+      pink: { title: "Pink Archive", pages: emptyPages },
+      orange: { title: "Orange Archive", pages: emptyPages },
+      brown: { title: "Brown Archive", pages: emptyPages },
+      white: { title: "White Archive", pages: emptyPages }
     };
 
-    let currentSet = 1;
-    let currentBookKey = '';
-    let currentPage = 0;
+    let activePages = [];
+    let currentPageIndex = 0;
+    let currentShelfPage = 1;
 
-    function toggleShelf() {
-      const shelf = document.getElementById('bookshelf');
-      const btn = document.getElementById('nextBtn');
-      if(currentSet === 1) {
-        shelf.style.transform = 'translateX(-50%)';
-        btn.innerText = '❮';
-        currentSet = 2;
+    function slideShelf() {
+      const slider = document.getElementById('slider');
+      const arrow = document.getElementById('arrowBtn');
+      if (currentShelfPage === 1) {
+        slider.style.transform = 'translateX(-50%)';
+        arrow.innerText = '❮';
+        currentShelfPage = 2;
       } else {
-        shelf.style.transform = 'translateX(0)';
-        btn.innerText = '❯';
-        currentSet = 1;
+        slider.style.transform = 'translateX(0)';
+        arrow.innerText = '❯';
+        currentShelfPage = 1;
       }
     }
 
     function openBook(key) {
-      currentBookKey = key;
-      currentPage = 0;
-      document.getElementById('bookTitle').innerText = key.toUpperCase();
+      const book = bookData[key];
+      document.getElementById('bookTitle').innerText = book.title;
+      activePages = book.pages;
+      currentPageIndex = 0;
       renderPage();
       document.getElementById('modal').classList.add('active');
     }
 
     function renderPage() {
-      document.getElementById('bookContent').innerHTML = data[currentBookKey][currentPage];
-      document.getElementById('pageIndicator').innerText = `${currentPage + 1} / 12`;
+      document.getElementById('bookContent').innerHTML = activePages[currentPageIndex];
+      document.getElementById('pageIndicator').innerText = `Seite ${currentPageIndex + 1} / 12`;
     }
 
     function changePage(dir) {
-      let next = currentPage + dir;
-      if(next >= 0 && next < 12) {
-        currentPage = next;
+      const next = currentPageIndex + dir;
+      if (next >= 0 && next < activePages.length) {
+        currentPageIndex = next;
         renderPage();
       }
     }
 
-    function closeBook() { document.getElementById('modal').classList.remove('active'); }
+    function closeBook() {
+      document.getElementById('modal').classList.remove('active');
+    }
   </script>
+
 </body>
 </html>
