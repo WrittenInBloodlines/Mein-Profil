@@ -595,18 +595,6 @@
       transition: background 0.4s ease, border-color 0.4s ease;
     }
 
-    .interactive-book::before {
-      content: "";
-      position: absolute;
-      top: 0; right: 0;
-      width: 0; height: 0;
-      border-style: solid;
-      border-width: 0 28px 28px 0;
-      border-color: transparent rgba(0, 0, 0, 0.25) transparent transparent;
-      z-index: 10;
-      pointer-events: none;
-    }
-
     .page-viewport {
       position: relative;
       flex: 1;
@@ -616,7 +604,7 @@
       flex-direction: column;
       perspective: 1200px;
       overflow: hidden;
-      background: inherit; /* Verhindert Transparenz */
+      background: inherit;
     }
 
     .book-body {
@@ -629,7 +617,7 @@
       z-index: 2;
     }
 
-    /* Blätter-Animation Element (Blickdicht & Solide) */
+    /* Blätter-Animation Element */
     .flip-leaf {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -1275,7 +1263,6 @@
     function renderPage() {
       document.getElementById('bookContent').innerHTML = activePages[currentPageIndex];
       
-      // Nur noch das Format "01 / 12"
       const pageNumFormatted = String(currentPageIndex + 1).padStart(2, '0');
       document.getElementById('pageIndicator').innerText = `${pageNumFormatted} / 12`;
     }
@@ -1290,19 +1277,16 @@
         const viewport = document.getElementById('pageViewport');
         const currentContent = document.getElementById('bookContent').innerHTML;
 
-        // Erstelle 3D-Blatt mit solidem Hintergrund
         const leaf = document.createElement('div');
         leaf.className = `flip-leaf ${dir > 0 ? 'flip-next' : 'flip-prev'}`;
         leaf.innerHTML = `<div class="book-body">${currentContent}</div>`;
         viewport.appendChild(leaf);
 
-        // Aktualisiere Text exakt in der Mitte der Rotation (450ms)
         setTimeout(() => {
           currentPageIndex = next;
           renderPage();
         }, 450);
 
-        // Aufräumen nach voller Animation (900ms)
         setTimeout(() => {
           if (leaf.parentNode) {
             leaf.parentNode.removeChild(leaf);
@@ -1318,4 +1302,4 @@
   </script>
 
 </body>
-  </html>
+</html>
