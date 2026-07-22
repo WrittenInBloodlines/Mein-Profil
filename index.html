@@ -586,6 +586,22 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,255,255,0.1);
     }
 
+    #flyingBook.opening {
+      animation: openCover 0.8s ease forwards;
+    }
+
+    @keyframes openCover {
+      0% {
+        transform: rotateY(-15deg) scale(1.05);
+      }
+      50% {
+        transform: rotateY(-60deg) scale(1.1);
+      }
+      100% {
+        transform: rotateY(-120deg) scale(1);
+      }
+    }
+
     #flyingBook::before {
       content: "✦ ⚜ ✦";
       color: #d4af37;
@@ -660,6 +676,21 @@
       perspective: 1500px;
       overflow: hidden;
       transition: background 0.4s ease, border-color 0.4s ease;
+    }
+
+    .interactive-book.closing {
+      animation: closeBook 0.6s ease forwards;
+    }
+
+    @keyframes closeBook {
+      0% {
+        transform: rotateY(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: rotateY(-90deg) scale(0.2);
+        opacity: 0;
+      }
     }
 
     .page-viewport {
@@ -1164,13 +1195,21 @@
       });
 
       setTimeout(() => {
-        flyingOverlay.style.display = 'none';
-        flyingBook.style.transform = 'none';
+        flyingBook.classList.add('opening');
 
-        renderBookPage();
-        const modal = document.getElementById('bookModal');
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          flyingOverlay.style.display = 'none';
+          flyingBook.classList.remove('opening');
+          flyingBook.style.transform = 'none';
+
+          renderBookPage();
+
+          const modal = document.getElementById('bookModal');
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+
+        }, 800);
+
       }, 750);
     }
 
@@ -1232,10 +1271,17 @@
     }
 
     function closeBook() {
+      const book = document.getElementById('interactiveBook');
       const modal = document.getElementById('bookModal');
-      modal.classList.remove('active');
-      document.body.style.overflow = '';
-      currentBookId = null;
+
+      book.classList.add('closing');
+
+      setTimeout(() => {
+        modal.classList.remove('active');
+        book.classList.remove('closing');
+        document.body.style.overflow = '';
+        currentBookId = null;
+      }, 600);
     }
 
     // REGAL SLIDER
@@ -1326,4 +1372,4 @@
     }
   </script>
 </body>
-</html>
+          </html>
