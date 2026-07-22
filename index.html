@@ -561,7 +561,7 @@
       object-fit: contain;
     }
 
-    /* 3D-FLUG ANIMATION MIT MITCOVER-TEXT UND LOGO */
+    /* 3D-FLUG ANIMATION MIT COVER-TEXT UND LOGO */
     #flyingBookOverlay {
       position: fixed;
       top: 0; left: 0;
@@ -669,6 +669,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      perspective: 1200px;
       overflow: hidden;
     }
 
@@ -682,6 +683,45 @@
       z-index: 2;
       white-space: pre-wrap;
       padding-right: 5px;
+    }
+
+    /* 3D SEITEN-BLÄTTERN ANIMATION */
+    .flip-leaf {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: inherit;
+      background-color: inherit;
+      padding: 0;
+      transform-origin: left center;
+      backface-visibility: hidden;
+      z-index: 20;
+      pointer-events: none;
+      box-shadow: -10px 0 20px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 1;
+    }
+
+    .flip-leaf.flip-next {
+      animation: flipForward 0.8s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    }
+
+    .flip-leaf.flip-prev {
+      transform-origin: right center;
+      animation: flipBackward 0.8s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    }
+
+    @keyframes flipForward {
+      0% { transform: rotateY(0deg) skewY(0deg); box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+      50% { transform: rotateY(-90deg) skewY(-2deg) scale(0.98); box-shadow: -25px 15px 30px rgba(0,0,0,0.6); }
+      100% { transform: rotateY(-180deg) skewY(0deg); box-shadow: -5px 0 10px rgba(0,0,0,0.1); }
+    }
+
+    @keyframes flipBackward {
+      0% { transform: rotateY(0deg) skewY(0deg); }
+      50% { transform: rotateY(90deg) skewY(2deg) scale(0.98); box-shadow: 25px 15px 30px rgba(0,0,0,0.6); }
+      100% { transform: rotateY(180deg) skewY(0deg); }
     }
 
     /* THEMES (BUCH INNEN) */
@@ -780,6 +820,7 @@
 <body>
 
   <audio id="rainAudio" loop src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Beethoven_Moonlight_1st_movement.ogg"></audio>
+  <audio id="fireAudio" loop src="https://assets.mixkit.co/active_storage/sfx/2678/2678-preview.mp3"></audio>
 
   <canvas id="particle-canvas"></canvas>
 
@@ -954,10 +995,8 @@
     <div class="interactive-book" id="interactiveBook">
       <div class="book-header" id="modalBookTitle">Buch-Titel</div>
       
-      <div class="page-viewport">
-        <div class="book-body" id="modalBookContent">
-          Seiteninhalt...
-        </div>
+      <div class="page-viewport" id="pageViewport">
+        <div class="book-body" id="modalBookContent">Seiteninhalt...</div>
       </div>
 
       <div class="book-controls">
@@ -1020,18 +1059,18 @@
     }
     animateParticles();
 
-    // DATENBANK FÜR ALLE BÜCHER (SEITEN 1 BIS 12 FULL CONTENT)
+    // DATENBANK FÜR ALLE BÜCHER (NEUE FULL CONTENT SEITEN)
     const booksDatabase = {
       alex: {
         title: "Alex (Ethyalexia)",
         theme: "theme-alex",
         pages: [
           "Kapitel 1: Der Schatten der Vergangenheit...\n\nIn den tiefen Gewölben des Archivs ruht die Geschichte von Ethyalexia. Ein Dasein zwischen Ewigkeit und Stille. Seine Augen spiegeln Jahrhunderte des Schmerzes wider.",
-          "Seite 2: Die erste Verwandlung...\n\nEin leises Flüstern durchbrach die Dunkelheit, als das Schmarks Schicksal besiegelt wurde. Die Verwandlung veränderte alles – sein Herzschlag verstummte, doch sein Leben begann von Neuem.",
+          "Seite 2: Die erste Verwandlung...\n\nEin leises Flüstern durchbrach die Dunkelheit, als das Schicksal besiegelt wurde. Die Verwandlung veränderte alles – sein Herzschlag verstummte, doch sein Leben begann von Neuem.",
           "Seite 3: Die Isolation...\n\nJahre verstrichen in stummer Betrachtung der Welt jenseits der kühlen Mauern. Er zog sich zurück, fest entschlossen, niemanden an sich heranzulassen.",
           "Seite 4: Die Begegnung...\n\nEin einziger Blick genügte, um die jahrzehntealte Kälte in seinem Herzen zu vertreiben. Als er Ciro traf, spürte er erstmals wieder echte Wärme.",
           "Seite 5: Das Zögern...\n\nSollte man sein Herz öffnen, wenn man weiß, wie zerbrechlich und kostbar das Leben eines Sterblichen sein kann? Alex zweifelte täglich an seiner eigenen Entscheidung.",
-          "Seite 6: Die Annäherung...\n\nJeder kleine Schritt broughte wieder ein Stück Licht in eine verloren geglaubte Existenz. Die Gespräche veränderten seine düstere Sicht auf die Welt.",
+          "Seite 6: Die Annäherung...\n\nJeder kleine Schritt brachte wieder ein Stück Licht in eine verloren geglaubte Existenz. Die Gespräche veränderten seine düstere Sicht auf die Welt.",
           "Seite 7: Vertrauen...\n\nDie hohen Mauern, die er über Jahrhunderte aufgebaut hatte, begannen Stück für Stück zu bröckeln, während er Ciros Gegenwart genoss.",
           "Seite 8: Der Schwur...\n\nEin leises Versprechen in den späten Stunden kurz vor dem unerbittlichen Morgengrauen: Nie wieder Einsamkeit.",
           "Seite 9: Gemeinsame Wege...\n\nZwei Seelen, die in der tiefsten Dunkelheit zueinander fanden und nie wieder losließen.",
@@ -1092,8 +1131,9 @@
 
     let currentBookId = null;
     let currentPage = 0;
+    let isFlipping = false;
 
-    // BUCH ÖFFNEN LOGIK MIT TITEL UND S.S. AUF DEM COVER
+    // FLUG ANIMATION UND BUCH ÖFFNEN
     function openBook(bookId, element) {
       currentBookId = bookId;
       currentPage = 0;
@@ -1104,10 +1144,8 @@
       const flyingBook = document.getElementById('flyingBook');
       const flyingTitle = document.getElementById('flyingBookTitle');
 
-      // Titel setzen für den Flug
       flyingTitle.innerText = data.title;
 
-      // Styling & Position anpassen
       flyingBook.style.top = rect.top + 'px';
       flyingBook.style.left = rect.left + 'px';
       flyingBook.style.width = rect.width + 'px';
@@ -1117,7 +1155,6 @@
 
       flyingOverlay.style.display = 'block';
 
-      // Animation starten
       requestAnimationFrame(() => {
         flyingBook.style.top = '10vh';
         flyingBook.style.left = 'calc(50vw - 150px)';
@@ -1126,7 +1163,6 @@
         flyingBook.style.transform = 'rotateY(-15deg) scale(1.05)';
       });
 
-      // Nach Animation das Leser-Modal öffnen
       setTimeout(() => {
         flyingOverlay.style.display = 'none';
         flyingBook.style.transform = 'none';
@@ -1138,7 +1174,7 @@
       }, 750);
     }
 
-    // INHALT UND SEITEN RENDERN
+    // SEITEN RENDERN MIT 3D-BLÄTTER-ANIMATION
     function renderBookPage() {
       if (!currentBookId) return;
       const data = booksDatabase[currentBookId] || booksDatabase.blue;
@@ -1151,24 +1187,50 @@
       document.getElementById('modalPageIndicator').innerText = `Seite ${currentPage + 1} / ${data.pages.length}`;
     }
 
-    // BLÄTTERN
     function nextPage() {
-      if (!currentBookId) return;
+      if (!currentBookId || isFlipping) return;
       const data = booksDatabase[currentBookId] || booksDatabase.blue;
       if (currentPage < data.pages.length - 1) {
-        currentPage++;
-        renderBookPage();
+        animatePageFlip('next', () => {
+          currentPage++;
+          renderBookPage();
+        });
       }
     }
 
     function prevPage() {
+      if (!currentBookId || isFlipping) return;
       if (currentPage > 0) {
-        currentPage--;
-        renderBookPage();
+        animatePageFlip('prev', () => {
+          currentPage--;
+          renderBookPage();
+        });
       }
     }
 
-    // BUCH SCHLIESSEN
+    // BLÄTTER-ANIMATION BUILDER
+    function animatePageFlip(direction, callback) {
+      isFlipping = true;
+      const viewport = document.getElementById('pageViewport');
+      const flipLeaf = document.createElement('div');
+      
+      flipLeaf.className = `flip-leaf flip-${direction}`;
+      flipLeaf.innerHTML = `<div class="book-body" style="padding:0;">${document.getElementById('modalBookContent').innerText}</div>`;
+      
+      viewport.appendChild(flipLeaf);
+
+      setTimeout(() => {
+        callback();
+      }, 350);
+
+      setTimeout(() => {
+        if (flipLeaf.parentNode) {
+          flipLeaf.parentNode.removeChild(flipLeaf);
+        }
+        isFlipping = false;
+      }, 800);
+    }
+
     function closeBook() {
       const modal = document.getElementById('bookModal');
       modal.classList.remove('active');
@@ -1216,20 +1278,40 @@
       document.getElementById('lightbox').classList.remove('active');
     }
 
-    // AUDIO & THEME TOGGLE
+    // AUDIO & DUAL-THEME LOGIK (ALEX NACHT UND CIRO TAG)
     let isMuted = true;
+    const rainAudio = document.getElementById('rainAudio');
+    const fireAudio = document.getElementById('fireAudio');
+
+    rainAudio.volume = 0.4;
+    fireAudio.volume = 0.4;
+
+    function updateBackgroundAudio() {
+      if (isMuted) {
+        rainAudio.pause();
+        fireAudio.pause();
+        return;
+      }
+
+      const isLightMode = document.body.classList.contains('light-mode');
+      if (isLightMode) {
+        rainAudio.pause();
+        fireAudio.play().catch(() => {});
+      } else {
+        fireAudio.pause();
+        rainAudio.play().catch(() => {});
+      }
+    }
+
     function toggleMute() {
-      const audio = document.getElementById('rainAudio');
+      isMuted = !isMuted;
       const btn = document.getElementById('audioBtn');
       if (isMuted) {
-        audio.play();
-        btn.innerText = "🔊";
-        isMuted = false;
-      } else {
-        audio.pause();
         btn.innerText = "🔇";
-        isMuted = true;
+      } else {
+        btn.innerText = "🔊";
       }
+      updateBackgroundAudio();
     }
 
     function toggleTheme() {
@@ -1240,6 +1322,7 @@
       } else {
         btn.innerText = "☀️ Ciros Tag-Modus";
       }
+      updateBackgroundAudio();
     }
   </script>
 </body>
