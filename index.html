@@ -433,7 +433,8 @@
       top: 0; bottom: 0; left: 7px;
       width: 2px;
       background: var(--title-color);
-      opacity: 0.5;
+      box-shadow: 0 0 12px var(--title-color);
+      opacity: 0.8;
     }
 
     .timeline-item { position: relative; margin-bottom: 30px; }
@@ -560,7 +561,7 @@
       object-fit: contain;
     }
 
-    /* 3D-FLUG ANIMATION */
+    /* 3D-FLUG ANIMATION MIT MITCOVER-TEXT UND LOGO */
     #flyingBookOverlay {
       position: fixed;
       top: 0; left: 0;
@@ -575,8 +576,53 @@
       position: absolute;
       transform-origin: center center;
       transform-style: preserve-3d;
-      border-radius: 5px 10px 10px 5px;
-      transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+      border-radius: 8px 12px 12px 8px;
+      transition: all 0.75s cubic-bezier(0.25, 1, 0.35, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 15px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.9), inset 0 0 15px rgba(255,255,255,0.1);
+    }
+
+    #flyingBook::before {
+      content: "✦ ⚜ ✦";
+      color: #d4af37;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    }
+
+    #flyingBook::after {
+      content: "";
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 1px double rgba(212, 175, 55, 0.8);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .flying-cover-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fce7a2;
+      text-align: center;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.95);
+      letter-spacing: 1px;
+      margin: auto 0;
+      padding: 0 10px;
+      line-height: 1.3;
+    }
+
+    .flying-cover-ss {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 900;
+      color: #d4af37;
+      letter-spacing: 3px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.9);
     }
 
     /* MODAL & BUCH LESER */
@@ -641,8 +687,7 @@
     /* THEMES (BUCH INNEN) */
     .interactive-book.theme-alex {
       background-color: #c2bba8;
-      background-image: 
-        radial-gradient(ellipse at center, rgba(230, 222, 205, 1) 0%, rgba(130, 120, 105, 1) 100%);
+      background-image: radial-gradient(ellipse at center, rgba(230, 222, 205, 1) 0%, rgba(130, 120, 105, 1) 100%);
       border: 3px solid #570b0b;
       box-shadow: 0 0 45px rgba(139, 0, 0, 0.4);
     }
@@ -654,8 +699,7 @@
 
     .interactive-book.theme-ciro {
       background-color: #d8c29d;
-      background-image: 
-        radial-gradient(ellipse at center, rgba(245, 232, 205, 1) 0%, rgba(165, 135, 90, 1) 100%);
+      background-image: radial-gradient(ellipse at center, rgba(245, 232, 205, 1) 0%, rgba(165, 135, 90, 1) 100%);
       border: 3px solid #8c6820;
       box-shadow: 0 0 45px rgba(212, 175, 55, 0.3);
     }
@@ -900,7 +944,10 @@
   </div>
 
   <div id="flyingBookOverlay">
-    <div id="flyingBook"></div>
+    <div id="flyingBook">
+      <div class="flying-cover-title" id="flyingBookTitle">Title</div>
+      <div class="flying-cover-ss">S.S.</div>
+    </div>
   </div>
 
   <div class="modal-overlay" id="bookModal">
@@ -924,37 +971,86 @@
   </div>
 
   <script>
-    // DATENBANK FÜR ALLE BÜCHER (SEITEN 1 BIS 12)
+    // PARTIKEL CANVAS ANIMATION
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.4 - 0.2;
+        this.speedY = -Math.random() * 0.5 - 0.1;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y < 0) this.y = canvas.height;
+        if (this.x < 0 || this.x > canvas.width) this.x = Math.random() * canvas.width;
+      }
+      draw() {
+        ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 45; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // DATENBANK FÜR ALLE BÜCHER (SEITEN 1 BIS 12 FULL CONTENT)
     const booksDatabase = {
       alex: {
-        title: "Ethyalexia (Alex)",
+        title: "Alex (Ethyalexia)",
         theme: "theme-alex",
         pages: [
-          "Kapitel 1: Der Schatten der Vergangenheit...\n\nIn den tiefen Gewölben des Archivs ruht die Geschichte von Ethyalexia. Ein Dasein zwischen Ewigkeit und Stille.",
-          "Seite 2: Die erste Verwandlung...\n\nEin leises Flüstern durchbrach die Dunkelheit, als das Schicksal besiegelt wurde. Die Verwandlung veränderte alles.",
-          "Seite 3: Die Isolation...\n\nJahre verstrichen in stummer Betrachtung der Welt jenseits der kühlen Mauern.",
-          "Seite 4: Die Begegnung...\n\nEin einziger Blick genügte, um die jahrzehntealte Kälte in seinem Herzen zu vertreiben.",
-          "Seite 5: Das Zögern...\n\nSollte man sein Herz öffnen, wenn man weiß, wie zerbrechlich und kostbar das Leben sein kann?",
-          "Seite 6: Die Annäherung...\n\nJeder kleine Schritt brachte wieder ein Stück Licht in eine verloren geglaubte Existenz.",
-          "Seite 7: Vertrauen...\n\nDie hohen Mauern, die er über Jahrhunderte aufgebaut hatte, begannen Stück für Stück zu bröckeln.",
-          "Seite 8: Der Schwur...\n\nEin leises Versprechen in den späten Stunden kurz vor dem unerbittlichen Morgengrauen.",
+          "Kapitel 1: Der Schatten der Vergangenheit...\n\nIn den tiefen Gewölben des Archivs ruht die Geschichte von Ethyalexia. Ein Dasein zwischen Ewigkeit und Stille. Seine Augen spiegeln Jahrhunderte des Schmerzes wider.",
+          "Seite 2: Die erste Verwandlung...\n\nEin leises Flüstern durchbrach die Dunkelheit, als das Schmarks Schicksal besiegelt wurde. Die Verwandlung veränderte alles – sein Herzschlag verstummte, doch sein Leben begann von Neuem.",
+          "Seite 3: Die Isolation...\n\nJahre verstrichen in stummer Betrachtung der Welt jenseits der kühlen Mauern. Er zog sich zurück, fest entschlossen, niemanden an sich heranzulassen.",
+          "Seite 4: Die Begegnung...\n\nEin einziger Blick genügte, um die jahrzehntealte Kälte in seinem Herzen zu vertreiben. Als er Ciro traf, spürte er erstmals wieder echte Wärme.",
+          "Seite 5: Das Zögern...\n\nSollte man sein Herz öffnen, wenn man weiß, wie zerbrechlich und kostbar das Leben eines Sterblichen sein kann? Alex zweifelte täglich an seiner eigenen Entscheidung.",
+          "Seite 6: Die Annäherung...\n\nJeder kleine Schritt broughte wieder ein Stück Licht in eine verloren geglaubte Existenz. Die Gespräche veränderten seine düstere Sicht auf die Welt.",
+          "Seite 7: Vertrauen...\n\nDie hohen Mauern, die er über Jahrhunderte aufgebaut hatte, begannen Stück für Stück zu bröckeln, während er Ciros Gegenwart genoss.",
+          "Seite 8: Der Schwur...\n\nEin leises Versprechen in den späten Stunden kurz vor dem unerbittlichen Morgengrauen: Nie wieder Einsamkeit.",
           "Seite 9: Gemeinsame Wege...\n\nZwei Seelen, die in der tiefsten Dunkelheit zueinander fanden und nie wieder losließen.",
-          "Seite 10: Die Prüfung...\n\nNicht jede Nacht blieb ohne Gefahren – doch gemeinsam erschien keine Bedrohung zu groß.",
-          "Seite 11: Die Heilung...\n\nAlte Narben verblassten langsam in der stetigen Gegenwart des anderen.",
-          "Seite 12: Die Ewigkeit...\n\nEin Archiv voller unvergesslicher Erinnerungen, geschrieben für die Unendlichkeit."
+          "Seite 10: Die Prüfung...\n\nNicht jede Nacht blieb ohne Gefahren – doch gemeinsam erschien keine Bedrohung zu groß, um sie nicht zu überstehen.",
+          "Seite 11: Die Heilung...\n\nAlte Narben verblassten langsam in der stetigen, bedingungslosen Gegenwart des anderen.",
+          "Seite 12: Die Ewigkeit...\n\nEin Archiv voller unvergesslicher Erinnerungen, geschrieben für die Unendlichkeit der gemeinsamen Liebe."
         ]
       },
       ciro: {
-        title: "Cyrus (Ciro)",
+        title: "Ciro (Cyrus)",
         theme: "theme-ciro",
         pages: [
           "Kapitel 1: Das Vermächtnis...\n\nCiros Aufzeichnungen dokumentieren die Spuren eines unerschütterlichen Willens und den Schutzinstinkt eines Anführers.",
-          "Seite 2: Der Verlust...\n\nEin tragischer Schicksalsschlag in seiner Jugend prägte fortan seinen Lebensweg.",
-          "Seite 3: Der Schutzinstinkt...\n\nNiemals wieder wollte Ciro zulassen, dass ihm ein geliebter Mensch genommen wird.",
-          "Seite 4: Das Aufeinandertreffen...\n\nEin unerwarteter Lichtblick in einer Welt voller Pflichten, Geschäftssinn und kalter Schatten.",
+          "Seite 2: Der Verlust...\n\nEin tragischer Schicksalsschlag in seiner Jugend prägte fortan seinen Lebensweg. Als Xavier entführt wurde, änderte sich alles.",
+          "Seite 3: Der Schutzinstinkt...\n\nNiemals wieder wollte Ciro zulassen, dass ihm ein geliebter Mensch genommen wird. Er schwor sich, stark zu bleiben.",
+          "Seite 4: Das Aufeinandertreffen...\n\nEin unerwarteter Lichtblick in einer Welt voller Pflichten, Geschäftssinn und kalter Schatten. Alex trat in sein Leben.",
           "Seite 5: Verborgene Emotionen...\n\nHinter der unnahbaren Fassade verbargen sich tiefe Gefühle und ungesagte Worte.",
           "Seite 6: Der Wendeort...\n\nEine stille Bank im Park, wo wenige Worte mehr bedeuteten als tausend Versprechen.",
-          "Seite 7: Der erste Kuss...\n\nEin Augenblick, der die Zeit für einen Moment stillstehen ließ.",
+          "Seite 7: Der erste Kuss...\n\nEin Augenblick, der die Zeit für einen Moment stillstehen ließ und alle Unsicherheiten vertrieb.",
           "Seite 8: Das Bündnis...\n\nUnerschütterlicher Zusammenhalt gegen jede Bedrohung von außen.",
           "Seite 9: Neue Zuversicht...\n\nDie Schatten der Vergangenheit verloren schrittweise ihren bedrohlichen Schrecken.",
           "Seite 10: Stille Stunden...\n\nDie wertvollsten Momente sind die, die man in absoluter Seelenruhe teilt.",
@@ -965,39 +1061,39 @@
       blue: {
         title: "Blue Archive",
         theme: "theme-default",
-        pages: Array.from({length: 12}, (_, i) => `Blue Archive — Seite ${i + 1}\n\nHier sind die geheimnisvollen Chroniken aus dem blauen Archiv niedergeschrieben.`)
+        pages: Array.from({length: 12}, (_, i) => `Blue Archive — Seite ${i + 1}\n\nHier sind die geheimnisvollen Chroniken aus dem blauen Archiv niedergeschrieben. Wissen, das die Gezeiten übersteht.`)
       },
       purple: {
         title: "Purple Archive",
         theme: "theme-default",
-        pages: Array.from({length: 12}, (_, i) => `Purple Archive — Seite ${i + 1}\n\nViolette Schriften über alte Magie und verborgene Pfade.`)
+        pages: Array.from({length: 12}, (_, i) => `Purple Archive — Seite ${i + 1}\n\nViolette Schriften über alte Magie, Träume und verborgene Pfade in die Nacht.`)
       },
       pink: {
         title: "Pink Archive",
         theme: "theme-default",
-        pages: Array.from({length: 12}, (_, i) => `Pink Archive — Seite ${i + 1}\n\nSanfte Gedanken und vertrauliche Notizen im Rosengarten.`)
+        pages: Array.from({length: 12}, (_, i) => `Pink Archive — Seite ${i + 1}\n\nSanfte Gedanken, Poesie und vertrauliche Notizen aus dem rosenverzierten Garten.`)
       },
       orange: {
         title: "Orange Archive",
         theme: "theme-default",
-        pages: Array.from({length: 12}, (_, i) => `Orange Archive — Seite ${i + 1}\n\nWarmes Licht und Geschichten aus den vergangenen Sommern.`)
+        pages: Array.from({length: 12}, (_, i) => `Orange Archive — Seite ${i + 1}\n\nWarmes Licht und Abenteuergeschichten aus den längst vergangenen Sommertagen.`)
       },
       brown: {
         title: "Brown Archive",
         theme: "theme-default",
-        pages: Array.from({length: 12}, (_, i) => `Brown Archive — Seite ${i + 1}\n\nAlte Lederbände voller Weisheiten und historischer Aufzeichnungen.`)
+        pages: Array.from({length: 12}, (_, i) => `Brown Archive — Seite ${i + 1}\n\nAlte Lederbände voller historischer Weisheiten, Legenden und uralter Geheimnisse.`)
       },
       white: {
         title: "White Archive",
         theme: "theme-default",
-        pages: Array.from({length: 12}, (_, i) => `White Archive — Seite ${i + 1}\n\nUnbeschriebene Seiten, die darauf warten, gelebt zu werden.`)
+        pages: Array.from({length: 12}, (_, i) => `White Archive — Seite ${i + 1}\n\nUnbeschriebene, reines Papier, das darauf wartet, mit neuen Schicksalen gefüllt zu werden.`)
       }
     };
 
     let currentBookId = null;
-    let currentPage = 0; // 0 = Seite 1
+    let currentPage = 0;
 
-    // BUCH ÖFFNEN LOGIK
+    // BUCH ÖFFNEN LOGIK MIT TITEL UND S.S. AUF DEM COVER
     function openBook(bookId, element) {
       currentBookId = bookId;
       currentPage = 0;
@@ -1006,8 +1102,12 @@
       const rect = element.getBoundingClientRect();
       const flyingOverlay = document.getElementById('flyingBookOverlay');
       const flyingBook = document.getElementById('flyingBook');
+      const flyingTitle = document.getElementById('flyingBookTitle');
 
-      // Flying Book für die Fluganimation konfigurieren
+      // Titel setzen für den Flug
+      flyingTitle.innerText = data.title;
+
+      // Styling & Position anpassen
       flyingBook.style.top = rect.top + 'px';
       flyingBook.style.left = rect.left + 'px';
       flyingBook.style.width = rect.width + 'px';
@@ -1017,25 +1117,24 @@
 
       flyingOverlay.style.display = 'block';
 
-      // Animation ins Zentrum starten
+      // Animation starten
       requestAnimationFrame(() => {
         flyingBook.style.top = '10vh';
         flyingBook.style.left = 'calc(50vw - 150px)';
         flyingBook.style.width = '300px';
         flyingBook.style.height = '80vh';
-        flyingBook.style.transform = 'rotateY(-20deg) scale(1.1)';
+        flyingBook.style.transform = 'rotateY(-15deg) scale(1.05)';
       });
 
-      // Nach Abschluss der Fluganimation direkt das stabile Lese-Modal anzeigen
+      // Nach Animation das Leser-Modal öffnen
       setTimeout(() => {
         flyingOverlay.style.display = 'none';
         flyingBook.style.transform = 'none';
 
-        // Modal füllen & anzeigen
         renderBookPage();
         const modal = document.getElementById('bookModal');
         modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Hintergrund Scrollen deaktivieren
+        document.body.style.overflow = 'hidden';
       }, 750);
     }
 
@@ -1045,7 +1144,6 @@
       const data = booksDatabase[currentBookId] || booksDatabase.blue;
       const bookContainer = document.getElementById('interactiveBook');
 
-      // Theme anpassen
       bookContainer.className = `interactive-book ${data.theme || 'theme-default'}`;
 
       document.getElementById('modalBookTitle').innerText = data.title;
@@ -1074,7 +1172,7 @@
     function closeBook() {
       const modal = document.getElementById('bookModal');
       modal.classList.remove('active');
-      document.body.style.overflow = ''; // Scrollen wieder aktivieren
+      document.body.style.overflow = '';
       currentBookId = null;
     }
 
