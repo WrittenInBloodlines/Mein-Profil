@@ -562,7 +562,79 @@
       object-fit: contain;
     }
 
-    /* MODAL & 3D BUCH ANIMATION */
+    /* NEUES 3D-FLUG SYSTEM FÜRS ÖFFNEN DES BUCHES */
+    #flyingBookOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 10001;
+      display: none;
+      perspective: 1800px;
+    }
+
+    #flyingBook {
+      position: absolute;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      border-radius: 5px 10px 10px 5px;
+      z-index: 2;
+    }
+
+    #flyingCoverFront {
+      position: absolute;
+      width: 100%; height: 100%;
+      backface-visibility: hidden;
+      border-radius: 5px 10px 10px 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: inset 7px 0 12px rgba(255, 255, 255, 0.18), inset -3px 0 8px rgba(0, 0, 0, 0.7);
+      transform: rotateY(0deg);
+    }
+
+    #flyingCoverFront::after {
+      content: "";
+      position: absolute;
+      top: 10px; left: 10px; right: 10px; bottom: 10px;
+      border: 2px double rgba(212, 175, 55, 0.75);
+      border-radius: 5px;
+      pointer-events: none;
+    }
+
+    #flyingTitle {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #fce7a2;
+      text-shadow: 0 4px 15px rgba(0,0,0,1);
+      opacity: 0;
+      padding: 20px;
+      text-align: center;
+      transition: opacity 0.6s ease;
+    }
+
+    #flyingCoverBack {
+      position: absolute;
+      width: 100%; height: 100%;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      background: #1a0f03;
+      border-radius: 10px 5px 5px 10px;
+      border-right: 3px solid #060404;
+      box-shadow: inset -15px 0 30px rgba(0,0,0,0.9);
+    }
+
+    #flyingCoverBack::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, transparent 10%);
+      pointer-events: none;
+    }
+
+    /* MODAL & 3D BUCH INNENSEITEN */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -577,7 +649,7 @@
       transition: opacity 0.3s ease;
     }
 
-    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-overlay.active { display: flex; } /* Opacity wird in JS gesteuert */
 
     .interactive-book {
       width: 92%;
@@ -655,31 +727,15 @@
     }
 
     @keyframes flipForward {
-      0% {
-        transform: rotateY(0deg) skewY(0deg);
-        box-shadow: 0 0 5px rgba(0,0,0,0.2);
-      }
-      50% {
-        transform: rotateY(-90deg) skewY(-2deg) scale(0.98);
-        box-shadow: -25px 15px 30px rgba(0,0,0,0.6);
-      }
-      100% {
-        transform: rotateY(-180deg) skewY(0deg);
-        box-shadow: -5px 0 10px rgba(0,0,0,0.1);
-      }
+      0% { transform: rotateY(0deg) skewY(0deg); box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+      50% { transform: rotateY(-90deg) skewY(-2deg) scale(0.98); box-shadow: -25px 15px 30px rgba(0,0,0,0.6); }
+      100% { transform: rotateY(-180deg) skewY(0deg); box-shadow: -5px 0 10px rgba(0,0,0,0.1); }
     }
 
     @keyframes flipBackward {
-      0% {
-        transform: rotateY(0deg) skewY(0deg);
-      }
-      50% {
-        transform: rotateY(90deg) skewY(2deg) scale(0.98);
-        box-shadow: 25px 15px 30px rgba(0,0,0,0.6);
-      }
-      100% {
-        transform: rotateY(180deg) skewY(0deg);
-      }
+      0% { transform: rotateY(0deg) skewY(0deg); }
+      50% { transform: rotateY(90deg) skewY(2deg) scale(0.98); box-shadow: 25px 15px 30px rgba(0,0,0,0.6); }
+      100% { transform: rotateY(180deg) skewY(0deg); }
     }
 
     @keyframes shadowFade {
@@ -688,9 +744,7 @@
       100% { opacity: 0; }
     }
 
-    /* CHARAKTER SPECIFIC THEMES (BUCH INNEN) */
-
-    /* ALEX THEME */
+    /* THEMES (BUCH INNEN) */
     .interactive-book.theme-alex {
       background-color: #c2bba8;
       background-image: 
@@ -700,31 +754,12 @@
       border: 3px solid #570b0b;
       box-shadow: 0 0 45px rgba(139, 0, 0, 0.4), inset 0 0 35px rgba(20, 0, 0, 0.6);
     }
+    .interactive-book.theme-alex .book-header { color: #4a0303; border-bottom: 2px dashed #8b0000; }
+    .interactive-book.theme-alex .book-body { color: #0e0707; }
+    .interactive-book.theme-alex .nav-btn { background: #4a0303; color: #fce7a2; border: 1px solid #8b0000; }
+    .interactive-book.theme-alex .nav-btn:hover { background: #8b0000; }
+    .interactive-book.theme-alex .page-indicator { color: #570b0b; }
 
-    .interactive-book.theme-alex .book-header {
-      color: #4a0303;
-      border-bottom: 2px dashed #8b0000;
-    }
-
-    .interactive-book.theme-alex .book-body {
-      color: #0e0707;
-    }
-
-    .interactive-book.theme-alex .nav-btn {
-      background: #4a0303;
-      color: #fce7a2;
-      border: 1px solid #8b0000;
-    }
-
-    .interactive-book.theme-alex .nav-btn:hover {
-      background: #8b0000;
-    }
-
-    .interactive-book.theme-alex .page-indicator {
-      color: #570b0b;
-    }
-
-    /* CIRO THEMES */
     .interactive-book.theme-ciro {
       background-color: #d8c29d;
       background-image: 
@@ -734,31 +769,12 @@
       border: 3px solid #8c6820;
       box-shadow: 0 0 45px rgba(212, 175, 55, 0.3), inset 0 0 35px rgba(45, 25, 5, 0.5);
     }
+    .interactive-book.theme-ciro .book-header { color: #3b2305; border-bottom: 2px dashed #b8860b; }
+    .interactive-book.theme-ciro .book-body { color: #1a0f03; }
+    .interactive-book.theme-ciro .nav-btn { background: #3b2305; color: #fce7a2; border: 1px solid #d4af37; }
+    .interactive-book.theme-ciro .nav-btn:hover { background: #8c6820; }
+    .interactive-book.theme-ciro .page-indicator { color: #3b2305; }
 
-    .interactive-book.theme-ciro .book-header {
-      color: #3b2305;
-      border-bottom: 2px dashed #b8860b;
-    }
-
-    .interactive-book.theme-ciro .book-body {
-      color: #1a0f03;
-    }
-
-    .interactive-book.theme-ciro .nav-btn {
-      background: #3b2305;
-      color: #fce7a2;
-      border: 1px solid #d4af37;
-    }
-
-    .interactive-book.theme-ciro .nav-btn:hover {
-      background: #8c6820;
-    }
-
-    .interactive-book.theme-ciro .page-indicator {
-      color: #3b2305;
-    }
-
-    /* STANDARD FALLBACK THEME */
     .interactive-book.theme-default {
       background-color: #bd9b70;
       background-image: radial-gradient(ellipse at center, rgba(240, 220, 185, 1) 0%, rgba(135, 95, 55, 1) 75%);
@@ -864,38 +880,38 @@
 
       <div class="books-slider" id="slider">
         <div class="shelf-page">
-          <div class="book-spine alex" onclick="openBook('alex')">
+          <div class="book-spine alex" onclick="openBook('alex', this)">
             <div class="spine-title">Alex (Ethyalexia)</div>
             <div class="spine-ss">S.S.</div>
           </div>
-          <div class="book-spine ciro" onclick="openBook('ciro')">
+          <div class="book-spine ciro" onclick="openBook('ciro', this)">
             <div class="spine-title">Ciro (Cyrus)</div>
             <div class="spine-ss">S.S.</div>
           </div>
-          <div class="book-spine blue" onclick="openBook('blue')">
+          <div class="book-spine blue" onclick="openBook('blue', this)">
             <div class="spine-title">Blue Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
-          <div class="book-spine purple" onclick="openBook('purple')">
+          <div class="book-spine purple" onclick="openBook('purple', this)">
             <div class="spine-title">Purple Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
         </div>
 
         <div class="shelf-page">
-          <div class="book-spine pink" onclick="openBook('pink')">
+          <div class="book-spine pink" onclick="openBook('pink', this)">
             <div class="spine-title">Pink Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
-          <div class="book-spine orange" onclick="openBook('orange')">
+          <div class="book-spine orange" onclick="openBook('orange', this)">
             <div class="spine-title">Orange Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
-          <div class="book-spine brown" onclick="openBook('brown')">
+          <div class="book-spine brown" onclick="openBook('brown', this)">
             <div class="spine-title">Brown Archive</div>
             <div class="spine-ss">S.S.</div>
           </div>
-          <div class="book-spine white" onclick="openBook('white')">
+          <div class="book-spine white" onclick="openBook('white', this)">
             <div class="spine-title" style="color: #ffffff;">White Archive</div>
             <div class="spine-ss" style="color: #ffffff;">S.S.</div>
           </div>
@@ -1001,6 +1017,15 @@
 
   <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
     <img id="lightboxImage" class="lightbox-img" src="" alt="Vollbild Artwork">
+  </div>
+
+  <div id="flyingBookOverlay">
+    <div id="flyingBook">
+      <div id="flyingCoverFront">
+        <div id="flyingTitle"></div>
+      </div>
+      <div id="flyingCoverBack"></div>
+    </div>
   </div>
 
   <div class="modal-overlay" id="modal">
@@ -1247,22 +1272,122 @@
       }
     }
 
-    function openBook(key) {
-      const book = bookData[key];
-      const bookModal = document.getElementById('interactiveBook');
+    /* NEUE 3D ANIMATION FÜR DAS BUCH ÖFFNEN */
+    function openBook(key, element) {
+      if (isFlipping) return;
+      isFlipping = true;
 
-      bookModal.className = "interactive-book " + (book.theme || "theme-default");
+      const rect = element.getBoundingClientRect();
+      const overlay = document.getElementById('flyingBookOverlay');
+      const flyingBook = document.getElementById('flyingBook');
+      const flyingCoverFront = document.getElementById('flyingCoverFront');
+      const flyingTitle = document.getElementById('flyingTitle');
 
-      document.getElementById('bookTitle').innerText = book.title;
-      activePages = book.pages;
-      currentPageIndex = 0;
-      renderPage();
-      document.getElementById('modal').classList.add('active');
+      // 1. Andere Bücher abdunkeln & geklicktes Buch leuchten lassen
+      document.querySelectorAll('.book-spine').forEach(spine => {
+        spine.style.transition = 'filter 0.5s ease';
+        spine.style.filter = 'brightness(0.3) grayscale(0.5)';
+      });
+      const glowColor = key === 'alex' ? 'rgba(180,20,20,0.8)' : (key === 'ciro' ? 'rgba(212,175,55,0.8)' : 'rgba(100,100,150,0.8)');
+      element.style.filter = `brightness(1.5) drop-shadow(0 0 20px ${glowColor})`;
+
+      // 2. 3D Buch vorbereiten
+      const bgClasses = ['alex', 'ciro', 'blue', 'purple', 'pink', 'orange', 'brown', 'white'];
+      bgClasses.forEach(c => flyingCoverFront.classList.remove(c));
+      flyingCoverFront.classList.add(key);
+
+      flyingTitle.innerText = bookData[key].title;
+      flyingTitle.style.opacity = '0';
+      flyingTitle.style.color = key === 'white' ? '#111' : '#fce7a2';
+
+      // Startposition direkt über dem Buchrücken im Regal
+      flyingBook.style.transition = 'none';
+      flyingBook.style.left = rect.left + 'px';
+      flyingBook.style.top = rect.top + 'px';
+      flyingBook.style.width = rect.width + 'px';
+      flyingBook.style.height = rect.height + 'px';
+      flyingBook.style.transform = 'translateZ(0) rotateY(0deg)';
+      flyingBook.style.boxShadow = '-10px 8px 18px rgba(0,0,0,0.9)';
+      
+      overlay.style.display = 'block';
+
+      // Parameter basierend auf Charakter
+      let floatDuration = 1300;
+      let floatEase = 'cubic-bezier(0.4, 0.0, 0.2, 1)';
+      let tilt = 'rotateX(5deg) rotateY(-10deg)';
+
+      if (key === 'alex') {
+        floatDuration = 1600;
+        floatEase = 'cubic-bezier(0.25, 0.1, 0.25, 1)';
+        tilt = 'rotateX(8deg) rotateY(-18deg)'; // bedrohlich, langsamer
+      } else if (key === 'ciro') {
+        floatDuration = 1200;
+        floatEase = 'cubic-bezier(0.34, 1.56, 0.64, 1)';
+        tilt = 'rotateX(2deg) rotateY(-5deg)'; // wärmer, elegant
+      }
+
+      const targetWidth = Math.min(window.innerWidth * 0.92, 540);
+      const targetHeight = window.innerHeight * 0.84;
+      const targetLeft = window.innerWidth / 2 - targetWidth / 2;
+      const targetTop = window.innerHeight / 2 - targetHeight / 2;
+
+      // Start Animation
+      setTimeout(() => {
+        // Buch schwebt in die Mitte & Cover breitet sich aus
+        flyingBook.style.transition = `all ${floatDuration}ms ${floatEase}`;
+        flyingBook.style.left = targetLeft + 'px';
+        flyingBook.style.top = targetTop + 'px';
+        flyingBook.style.width = targetWidth + 'px';
+        flyingBook.style.height = targetHeight + 'px';
+        flyingBook.style.transform = `translateZ(250px) ${tilt}`;
+        flyingBook.style.boxShadow = '-40px 30px 50px rgba(0,0,0,0.8)';
+
+        setTimeout(() => { flyingTitle.style.opacity = '1'; }, floatDuration * 0.4);
+
+        // Aufklappen & Überblenden
+        setTimeout(() => {
+          // Inhalt vorbereiten
+          const book = bookData[key];
+          const bookModal = document.getElementById('interactiveBook');
+          bookModal.className = "interactive-book " + (book.theme || "theme-default");
+          document.getElementById('bookTitle').innerText = book.title;
+          activePages = book.pages;
+          currentPageIndex = 0;
+          renderPage();
+
+          const modal = document.getElementById('modal');
+          modal.style.display = 'flex';
+          modal.style.opacity = '0';
+
+          // Buch legt sich flach zum Bildschirm
+          flyingBook.style.transition = 'all 0.3s ease-out';
+          flyingBook.style.transform = 'translateZ(100px) rotateX(0deg) rotateY(0deg)';
+
+          setTimeout(() => {
+            // Seitenansicht blendet ein
+            modal.style.transition = 'opacity 0.6s ease';
+            modal.style.opacity = '1';
+
+            // Cover klappt auf wie ein Hardcover (-180 Grad drehen)
+            flyingBook.style.transition = 'transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1)';
+            flyingBook.style.transform = 'translateZ(100px) rotateY(-180deg)';
+            flyingBook.style.boxShadow = '-5px 10px 15px rgba(0,0,0,0.3)';
+
+            setTimeout(() => {
+              // Standard-Modal komplett übernehmen lassen
+              modal.style.cssText = ''; 
+              modal.classList.add('active');
+              overlay.style.display = 'none';
+              isFlipping = false;
+            }, 900);
+
+          }, 300); // Warte, bis Buch flach liegt
+        }, floatDuration + 100);
+      }, 50);
     }
 
     function renderPage() {
       document.getElementById('bookContent').innerHTML = activePages[currentPageIndex];
-      
       const pageNumFormatted = String(currentPageIndex + 1).padStart(2, '0');
       document.getElementById('pageIndicator').innerText = `${pageNumFormatted} / 12`;
     }
@@ -1297,9 +1422,22 @@
     }
 
     function closeBook() {
-      document.getElementById('modal').classList.remove('active');
+      const modal = document.getElementById('modal');
+      modal.style.transition = 'opacity 0.4s ease';
+      modal.style.opacity = '0';
+      
+      setTimeout(() => {
+        modal.classList.remove('active');
+        modal.style.cssText = '';
+        
+        // Regal-Farben wiederherstellen
+        document.querySelectorAll('.book-spine').forEach(spine => {
+          spine.style.filter = '';
+        });
+        isFlipping = false;
+      }, 400);
     }
   </script>
 
 </body>
-</html>
+  </html>
