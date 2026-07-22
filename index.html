@@ -590,12 +590,11 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0 0 50px rgba(0,0,0,0.95), inset 0 0 30px rgba(0,0,0,0.2);
-      perspective: 1500px; /* ermöglicht 3D Raum */
+      perspective: 1500px;
       overflow: hidden;
       transition: background 0.4s ease, border-color 0.4s ease;
     }
 
-    /* Buch-Ecken & Knick Effekt */
     .interactive-book::before {
       content: "";
       position: absolute;
@@ -608,7 +607,6 @@
       pointer-events: none;
     }
 
-    /* 3D Flapping Leaf Container */
     .page-viewport {
       position: relative;
       flex: 1;
@@ -618,6 +616,7 @@
       flex-direction: column;
       perspective: 1200px;
       overflow: hidden;
+      background: inherit; /* Verhindert Transparenz */
     }
 
     .book-body {
@@ -630,12 +629,13 @@
       z-index: 2;
     }
 
-    /* Blätter-Animation Element */
+    /* Blätter-Animation Element (Blickdicht & Solide) */
     .flip-leaf {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: inherit;
-      padding: inherit;
+      background-color: inherit;
+      padding: 0;
       transform-origin: left center;
       backface-visibility: hidden;
       z-index: 20;
@@ -644,6 +644,7 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      opacity: 1;
     }
 
     .flip-leaf.flip-next {
@@ -655,12 +656,11 @@
       animation: flipBackward 0.9s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
     }
 
-    /* Schatten-Überlauf während des Drehens */
     .flip-leaf::after {
       content: "";
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%);
+      background: linear-gradient(90deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
       opacity: 0;
       animation: shadowFade 0.9s ease-in-out forwards;
       pointer-events: none;
@@ -702,11 +702,11 @@
 
     /* CHARAKTER SPECIFIC THEMES (BUCH INNEN) */
 
-    /* ALEX THEME: Dunkle Tinte, Rote Akzente, kühle Vampir-Pergament Optik */
+    /* ALEX THEME */
     .interactive-book.theme-alex {
-      background: #c2bba8;
+      background-color: #c2bba8;
       background-image: 
-        radial-gradient(ellipse at center, rgba(230, 222, 205, 0.6) 0%, rgba(130, 120, 105, 0.75) 100%),
+        radial-gradient(ellipse at center, rgba(230, 222, 205, 1) 0%, rgba(130, 120, 105, 1) 100%),
         radial-gradient(circle at 10% 20%, rgba(139, 0, 0, 0.08) 0%, transparent 20%),
         radial-gradient(circle at 85% 80%, rgba(139, 0, 0, 0.06) 0%, transparent 25%);
       border: 3px solid #570b0b;
@@ -736,11 +736,11 @@
       color: #570b0b;
     }
 
-    /* CIRO THEMES: Warmes Papier, Goldene Akzente, Edles Pergament */
+    /* CIRO THEMES */
     .interactive-book.theme-ciro {
-      background: #d8c29d;
+      background-color: #d8c29d;
       background-image: 
-        radial-gradient(ellipse at center, rgba(245, 232, 205, 0.7) 0%, rgba(165, 135, 90, 0.8) 100%),
+        radial-gradient(ellipse at center, rgba(245, 232, 205, 1) 0%, rgba(165, 135, 90, 1) 100%),
         radial-gradient(circle at 90% 15%, rgba(184, 134, 11, 0.12) 0%, transparent 30%),
         radial-gradient(circle at 15% 85%, rgba(101, 67, 33, 0.08) 0%, transparent 25%);
       border: 3px solid #8c6820;
@@ -772,8 +772,8 @@
 
     /* STANDARD FALLBACK THEME */
     .interactive-book.theme-default {
-      background: #bd9b70;
-      background-image: radial-gradient(ellipse at center, rgba(240, 220, 185, 0.4) 0%, rgba(135, 95, 55, 0.6) 75%);
+      background-color: #bd9b70;
+      background-image: radial-gradient(ellipse at center, rgba(240, 220, 185, 1) 0%, rgba(135, 95, 55, 1) 75%);
       border: 3px solid #420808;
     }
 
@@ -810,7 +810,7 @@
     .page-indicator {
       font-family: 'Cinzel', serif;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 14px;
       letter-spacing: 1px;
     }
 
@@ -1025,7 +1025,7 @@
 
       <div class="book-controls">
         <button class="nav-btn" onclick="changePage(-1)">&lt; Zurück</button>
-        <span class="page-indicator" id="pageIndicator">Archivblatt 01 / 12</span>
+        <span class="page-indicator" id="pageIndicator">01 / 12</span>
         <button class="nav-btn" onclick="changePage(1)">Weiter &gt;</button>
       </div>
       <button class="close-modal-btn" onclick="closeBook()">✕ Schließen</button>
@@ -1263,7 +1263,6 @@
       const book = bookData[key];
       const bookModal = document.getElementById('interactiveBook');
 
-      // Setze charakter-spezifischen Theme Stil
       bookModal.className = "interactive-book " + (book.theme || "theme-default");
 
       document.getElementById('bookTitle').innerText = book.title;
@@ -1276,9 +1275,9 @@
     function renderPage() {
       document.getElementById('bookContent').innerHTML = activePages[currentPageIndex];
       
-      // Seitenzahl Formatierung: "Archivblatt 04 / 12"
+      // Nur noch das Format "01 / 12"
       const pageNumFormatted = String(currentPageIndex + 1).padStart(2, '0');
-      document.getElementById('pageIndicator').innerText = `Archivblatt ${pageNumFormatted} / 12`;
+      document.getElementById('pageIndicator').innerText = `${pageNumFormatted} / 12`;
     }
 
     function changePage(dir) {
@@ -1291,19 +1290,19 @@
         const viewport = document.getElementById('pageViewport');
         const currentContent = document.getElementById('bookContent').innerHTML;
 
-        // Erstelle 3D-Flap-Blatt
+        // Erstelle 3D-Blatt mit solidem Hintergrund
         const leaf = document.createElement('div');
         leaf.className = `flip-leaf ${dir > 0 ? 'flip-next' : 'flip-prev'}`;
         leaf.innerHTML = `<div class="book-body">${currentContent}</div>`;
         viewport.appendChild(leaf);
 
-        // Aktualisiere das darunter liegende echte Dokument mittendrin
+        // Aktualisiere Text exakt in der Mitte der Rotation (450ms)
         setTimeout(() => {
           currentPageIndex = next;
           renderPage();
-        }, 450); // exakt bei der Hälfe der 0.9s Drehung
+        }, 450);
 
-        // Entferne das 3D-Animationsblatt nach Ablauf der 0,9s
+        // Aufräumen nach voller Animation (900ms)
         setTimeout(() => {
           if (leaf.parentNode) {
             leaf.parentNode.removeChild(leaf);
@@ -1319,4 +1318,4 @@
   </script>
 
 </body>
-</html>
+  </html>
